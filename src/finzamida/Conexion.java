@@ -1,4 +1,4 @@
-package finamida;
+package finzamida;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,9 +7,10 @@ import java.sql.SQLException;
 public class Conexion {
 
     private Connection con = null;
+    Connection reg;
 
     public Conexion() {
-       conectar();
+        conectar();
     }
 
     public void conectar() {
@@ -31,6 +32,10 @@ public class Conexion {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+     public Connection getConexion() {
+        return con; 
     }
 
 }
