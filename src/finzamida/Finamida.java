@@ -1,4 +1,4 @@
-package finamida;
+package finzamida;
 
 public class Finamida {
 
