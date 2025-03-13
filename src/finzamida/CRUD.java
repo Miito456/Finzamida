@@ -126,7 +126,7 @@ public class CRUD {
     }
 
     public void bajaTransaccion(int idTransaccion) {
-        String sentenciaSQL = "DELETE FROM Transacciones WHERE idTransaccion = " + idTransaccion;
+        String sentenciaSQL = "DELETE FROM Transacciones WHERE idTransacciones = " + idTransaccion;
         try {
             Statement stm = reg.createStatement();
             int filasAfectadas = stm.executeUpdate(sentenciaSQL);
