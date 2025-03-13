@@ -10,13 +10,13 @@ public class Conexion {
     Connection reg;
 
     public Conexion() {
-        conectar();
+        //conectar();
     }
 
     public void conectar() {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost/finzamida?user=root&password=");
-            System.out.println("Conectado a la base de datos");
+            //System.out.println("Conectado a la base de datos");
         } catch (SQLException sqle) {
             System.out.println(sqle.getMessage());
         }

@@ -52,4 +52,36 @@ public class Usuarios {
         return FechaAlta;
     }
 
+    public void setCURP(String CURP) {
+        this.CURP = CURP;
+    }
+
+    public void setRFC(String RFC) {
+        this.RFC = RFC;
+    }
+
+    public void setNombre(String Nombre) {
+        this.Nombre = Nombre;
+    }
+
+    public void setApellidoPat(String ApellidoPat) {
+        this.ApellidoPat = ApellidoPat;
+    }
+
+    public void setApellidoMat(String ApellidoMat) {
+        this.ApellidoMat = ApellidoMat;
+    }
+
+    public void setCorreoElectronico(String CorreoElectronico) {
+        this.CorreoElectronico = CorreoElectronico;
+    }
+
+    public void setContrasena(String Contrasena) {
+        this.Contrasena = Contrasena;
+    }
+
+    public void setFechaAlta(String FechaAlta) {
+        this.FechaAlta = FechaAlta;
+    }
+
 }
