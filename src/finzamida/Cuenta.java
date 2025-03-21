@@ -43,4 +43,33 @@ public class Cuenta {
     public String getFechaCreacion() {
         return FechaCreacion;
     }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public void setNombre(String Nombre) {
+        this.Nombre = Nombre;
+    }
+
+    public void setTipo(String Tipo) {
+        this.Tipo = Tipo;
+    }
+
+    public void setBanco(String Banco) {
+        this.Banco = Banco;
+    }
+
+    public void setNumeroCuenta(String NumeroCuenta) {
+        this.NumeroCuenta = NumeroCuenta;
+    }
+
+    public void setFechaCreacion(String FechaCreacion) {
+        this.FechaCreacion = FechaCreacion;
+    }
+
+    public void setSaldo(double Saldo) {
+        this.Saldo = Saldo;
+    }
+
 }

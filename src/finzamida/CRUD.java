@@ -13,6 +13,7 @@ public class CRUD {
 
     }
 
+    //Alta de cada uno de las tablas
     public void altaUsuario(Usuarios usuario) {
         String sentenciaSQL = "INSERT INTO Usuarios (CURP, RFC, Nombre, ApellidoPat, ApellidoMat, CorreoElectronico, Contrasena, FechaAlta) "
                 + "VALUES ('"
@@ -93,6 +94,59 @@ public class CRUD {
             System.out.println("Filas afectadas: " + filasAfectadas);
         } catch (SQLException sqle) {
             System.out.println("Error al registrar categoría: " + sqle.getMessage());
+            sqle.printStackTrace();
+        }
+    }
+
+    //Delete de cada uno de las tablas
+    public void bajaUsuario(String curp) {
+        String sentenciaSQL = "DELETE FROM Usuarios WHERE CURP = '" + curp + "'";
+        try {
+            Statement stm = reg.createStatement();
+            int filasAfectadas = stm.executeUpdate(sentenciaSQL);
+            System.out.println("Usuario eliminado correctamente.");
+            System.out.println("Filas afectadas: " + filasAfectadas);
+        } catch (SQLException sqle) {
+            System.out.println("Error al eliminar usuario: " + sqle.getMessage());
+            sqle.printStackTrace();
+        }
+    }
+
+    public void bajaCuenta(int idCuenta) {
+        String sentenciaSQL = "DELETE FROM Cuenta WHERE idCuenta = " + idCuenta;
+        try {
+            Statement stm = reg.createStatement();
+            int filasAfectadas = stm.executeUpdate(sentenciaSQL);
+            System.out.println("Cuenta eliminada correctamente.");
+            System.out.println("Filas afectadas: " + filasAfectadas);
+        } catch (SQLException sqle) {
+            System.out.println("Error al eliminar cuenta: " + sqle.getMessage());
+            sqle.printStackTrace();
+        }
+    }
+
+    public void bajaTransaccion(int idTransaccion) {
+        String sentenciaSQL = "DELETE FROM Transacciones WHERE idTransacciones = " + idTransaccion;
+        try {
+            Statement stm = reg.createStatement();
+            int filasAfectadas = stm.executeUpdate(sentenciaSQL);
+            System.out.println("Transacción eliminada correctamente.");
+            System.out.println("Filas afectadas: " + filasAfectadas);
+        } catch (SQLException sqle) {
+            System.out.println("Error al eliminar transacción: " + sqle.getMessage());
+            sqle.printStackTrace();
+        }
+    }
+
+    public void bajaCategoria(int idCategoria) {
+        String sentenciaSQL = "DELETE FROM Categorias WHERE idCategoria = " + idCategoria;
+        try {
+            Statement stm = reg.createStatement();
+            int filasAfectadas = stm.executeUpdate(sentenciaSQL);
+            System.out.println("Categoría eliminada correctamente.");
+            System.out.println("Filas afectadas: " + filasAfectadas);
+        } catch (SQLException sqle) {
+            System.out.println("Error al eliminar categoría: " + sqle.getMessage());
             sqle.printStackTrace();
         }
     }
