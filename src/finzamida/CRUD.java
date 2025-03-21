@@ -151,4 +151,86 @@ public class CRUD {
         }
     }
 
+    // Actualizar un usuario
+    public void actualizarUsuario(Usuarios usuario) {
+        String sentenciaSQL = "UPDATE Usuarios SET "
+                + "RFC = '" + usuario.getRFC() + "', "
+                + "Nombre = '" + usuario.getNombre() + "', "
+                + "ApellidoPat = '" + usuario.getApellidoPat() + "', "
+                + "ApellidoMat = '" + usuario.getApellidoMat() + "', "
+                + "CorreoElectronico = '" + usuario.getCorreoElectronico() + "', "
+                + "Contrasena = '" + usuario.getContrasena() + "' "
+                + "WHERE CURP = '" + usuario.getCURP() + "'";
+
+        try {
+            Statement stm = reg.createStatement();
+            int filasAfectadas = stm.executeUpdate(sentenciaSQL);
+            System.out.println("Usuario actualizado correctamente.");
+            System.out.println("Filas afectadas: " + filasAfectadas);
+        } catch (SQLException sqle) {
+            System.out.println("Error al actualizar usuario: " + sqle.getMessage());
+            sqle.printStackTrace();
+        }
+    }
+
+    // Actualizar una cuenta
+    public void actualizarCuenta(Cuenta cuenta) {
+        String sentenciaSQL = "UPDATE Cuenta SET "
+                + "Nombre = '" + cuenta.getNombre() + "', "
+                + "Tipo = '" + cuenta.getTipo() + "', "
+                + "Banco = '" + cuenta.getBanco() + "', "
+                + "NumeroCuenta = '" + cuenta.getNumeroCuenta() + "', "
+                + "Saldo = " + cuenta.getSaldo() + " "
+                + "WHERE idUsuario = " + cuenta.getIdUsuario();
+
+        try {
+            Statement stm = reg.createStatement();
+            int filasAfectadas = stm.executeUpdate(sentenciaSQL);
+            System.out.println("Cuenta actualizada correctamente.");
+            System.out.println("Filas afectadas: " + filasAfectadas);
+        } catch (SQLException sqle) {
+            System.out.println("Error al actualizar cuenta: " + sqle.getMessage());
+            sqle.printStackTrace();
+        }
+    }
+
+    // Actualizar transacción
+    public void actualizarTransaccion(Transacciones transaccion) {
+        String sentenciaSQL = "UPDATE Transacciones SET "
+                + "Monto = " + transaccion.getMonto() + ", "
+                + "Tipo = '" + transaccion.getTipo() + "', "
+                + "Descripcion = '" + transaccion.getDescripcion() + "', "
+                + "Fecha = '" + transaccion.getFecha() + "' "
+                + "WHERE idUsuario = " + transaccion.getIdUsuario() + " "
+                + "AND idCuenta = " + transaccion.getIdCuenta() + " "
+                + "AND idCategoria = " + transaccion.getIdCategoria();
+
+        try {
+            Statement stm = reg.createStatement();
+            int filasAfectadas = stm.executeUpdate(sentenciaSQL);
+            System.out.println("Transacción actualizada correctamente.");
+            System.out.println("Filas afectadas: " + filasAfectadas);
+        } catch (SQLException sqle) {
+            System.out.println("Error al actualizar transacción: " + sqle.getMessage());
+            sqle.printStackTrace();
+        }
+    }
+
+        // Actualizar categoría
+    public void actualizarCategoria(Categoria categoria) {
+        String sentenciaSQL = "UPDATE Categorias SET "
+                + "Nombre = '" + categoria.getNombre() + "' "
+                + "WHERE idUsuario = " + categoria.getIdUsuario();
+
+        try {
+            Statement stm = reg.createStatement();
+            int filasAfectadas = stm.executeUpdate(sentenciaSQL);
+            System.out.println("Categoría actualizada correctamente.");
+            System.out.println("Filas afectadas: " + filasAfectadas);
+        } catch (SQLException sqle) {
+            System.out.println("Error al actualizar categoría: " + sqle.getMessage());
+            sqle.printStackTrace();
+        }
+    }
+
 }
