@@ -13,9 +13,7 @@ public class CRUD {
 
     }
 
-    //
-    //Modulo de altas
-    //
+    //Alta de cada uno de las tablas
     public void altaUsuario(Usuarios usuario) {
         String sentenciaSQL = "INSERT INTO Usuarios (CURP, RFC, Nombre, ApellidoPat, ApellidoMat, CorreoElectronico, Contrasena, FechaAlta) "
                 + "VALUES ('"
@@ -100,9 +98,7 @@ public class CRUD {
         }
     }
 
-    //
-    //Modulo de bajas
-    //
+    //Delete de cada uno de las tablas
     public void bajaUsuario(String curp) {
         String sentenciaSQL = "DELETE FROM Usuarios WHERE CURP = '" + curp + "'";
         try {
@@ -236,10 +232,5 @@ public class CRUD {
             sqle.printStackTrace();
         }
     }
-<<<<<<< HEAD
-    
-    
-=======
 
->>>>>>> a6cb742944ce5698bbd4c43c8f4537609ee41401
 }
