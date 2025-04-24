@@ -494,12 +494,18 @@ public class Transacciones extends javax.swing.JFrame {
 
     private void btnReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteActionPerformed
         try {
-            String reportPath = getClass().getClassLoader().getResource("Reports/Reporte_.jrxml").getPath();
+            String reportPath = getClass().getClassLoader().getResource("Reports/ReporteSemanal.jrxml").getPath();
             JasperReport jasperReport = JasperCompileManager.compileReport(reportPath);
             java.util.Map<String, Object> parameters = new java.util.HashMap<>();
             parameters.put("idUsuario", this.idUsuario);
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, reg);
             JasperViewer viewer = new JasperViewer(jasperPrint, false);
+            int x = this.getX();
+            int y = this.getY();
+            int width = this.getWidth();
+            int height = this.getHeight();
+            viewer.setBounds(x, y, width, height);
+            viewer.setZoomRatio(0.63f);
             viewer.setVisible(true);
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(this, "Error al generar el reporte: " + ex.getMessage());

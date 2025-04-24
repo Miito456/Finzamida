@@ -57,7 +57,7 @@ public class Categorias extends javax.swing.JFrame {
         Logo = new UIUtils.LogoPanel();
         btnDashboard = new Items.MyButton();
         btnCuentas = new Items.MyButton();
-        btnTransacciones1 = new Items.MyButton();
+        btnTransacciones2 = new Items.MyButton();
         btnCategorias = new Items.MyButton();
         btnCerrarSesion = new Items.MyButton();
         btnReporte = new Items.MyButton();
@@ -185,19 +185,19 @@ public class Categorias extends javax.swing.JFrame {
         });
         MenuBotones.add(btnCuentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 189, 44));
 
-        btnTransacciones1.setForeground(new java.awt.Color(55, 0, 43));
-        btnTransacciones1.setText("Transacciones");
-        btnTransacciones1.setBorderColor(new java.awt.Color(55, 36, 85));
-        btnTransacciones1.setColor(new java.awt.Color(226, 232, 247));
-        btnTransacciones1.setColorOver(new java.awt.Color(176, 179, 185));
-        btnTransacciones1.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
-        btnTransacciones1.setRadius(40);
-        btnTransacciones1.addActionListener(new java.awt.event.ActionListener() {
+        btnTransacciones2.setForeground(new java.awt.Color(55, 0, 43));
+        btnTransacciones2.setText("Transacciones");
+        btnTransacciones2.setBorderColor(new java.awt.Color(55, 36, 85));
+        btnTransacciones2.setColor(new java.awt.Color(226, 232, 247));
+        btnTransacciones2.setColorOver(new java.awt.Color(176, 179, 185));
+        btnTransacciones2.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        btnTransacciones2.setRadius(40);
+        btnTransacciones2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTransacciones1ActionPerformed(evt);
+                btnTransacciones2ActionPerformed(evt);
             }
         });
-        MenuBotones.add(btnTransacciones1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 189, 44));
+        MenuBotones.add(btnTransacciones2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 189, 44));
 
         btnCategorias.setForeground(new java.awt.Color(55, 0, 43));
         btnCategorias.setText("Categorías");
@@ -311,7 +311,7 @@ public class Categorias extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnCuentasActionPerformed
 
-    private void btnTransacciones1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransacciones1ActionPerformed
+    private void btnTransacciones2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransacciones2ActionPerformed
         FlatRobotoFont.install();
         FlatLaf.registerCustomDefaultsSource("tableview");
         UIManager.put("defaultFont", new Font(FlatRobotoFont.FAMILY, Font.PLAIN, 13));
@@ -319,7 +319,7 @@ public class Categorias extends javax.swing.JFrame {
 
         new Transacciones(idUsuario).setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnTransacciones1ActionPerformed
+    }//GEN-LAST:event_btnTransacciones2ActionPerformed
 
     private void btnCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriasActionPerformed
         new Categorias(idUsuario).setVisible(true);
@@ -333,12 +333,18 @@ public class Categorias extends javax.swing.JFrame {
 
     private void btnReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteActionPerformed
         try {
-            String reportPath = getClass().getClassLoader().getResource("Reports/Reporte_.jrxml").getPath();
+            String reportPath = getClass().getClassLoader().getResource("Reports/ReporteSemanal.jrxml").getPath();
             JasperReport jasperReport = JasperCompileManager.compileReport(reportPath);
             java.util.Map<String, Object> parameters = new java.util.HashMap<>();
             parameters.put("idUsuario", this.idUsuario);
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, reg);
             JasperViewer viewer = new JasperViewer(jasperPrint, false);
+            int x = this.getX();
+            int y = this.getY();
+            int width = this.getWidth();
+            int height = this.getHeight();
+            viewer.setBounds(x, y, width, height);
+            viewer.setZoomRatio(0.63f);
             viewer.setVisible(true);
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(this, "Error al generar el reporte: " + ex.getMessage());
@@ -394,7 +400,7 @@ public class Categorias extends javax.swing.JFrame {
     private Items.MyButton btnEliminar;
     private Items.MyButton btnReporte;
     private Items.MyButton btnTransacciones;
-    private Items.MyButton btnTransacciones1;
+    private Items.MyButton btnTransacciones2;
     private javax.swing.JLabel lblNombreCategoria;
     // End of variables declaration//GEN-END:variables
 
