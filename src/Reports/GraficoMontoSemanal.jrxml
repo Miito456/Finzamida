@@ -1,0 +1,52 @@
+<!-- Created with Jaspersoft Studio version 7.0.2.final using JasperReports Library version 7.0.2-31532122640f516c6d17238ae0e41a08113d5ac0  -->
+<jasperReport name="Blank_A4_Landscape_1" language="java" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b9aa3e13-6149-4c42-b941-b168379f0e1c">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="finzamida"/>
+	<parameter name="idUsuario" class="java.lang.Integer"/>
+	<query language="SQL"><![CDATA[SELECT
+    DATE_FORMAT(t.Fecha, '%M %e, %Y') AS FechaTransaccionGrafico,
+    SUM(t.Monto) AS MontoTotalGrafico
+FROM
+    transacciones t
+WHERE
+    t.idUsuario = $P{idUsuario} AND
+    t.Fecha >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND t.Fecha <= CURDATE() 
+    AND
+    t.Tipo = 'Ingreso'
+GROUP BY
+    DATE(t.Fecha)
+ORDER BY
+    t.Fecha;]]></query>
+	<field name="FechaTransaccionGrafico" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="FechaTransaccionGrafico"/>
+		<property name="com.jaspersoft.studio.field.label" value="FechaTransaccionGrafico"/>
+	</field>
+	<field name="MontoTotalGrafico" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="MontoTotalGrafico"/>
+		<property name="com.jaspersoft.studio.field.label" value="MontoTotalGrafico"/>
+	</field>
+	<background splitType="Stretch"/>
+	<title height="175" splitType="Stretch">
+		<element kind="chart" chartType="bar" uuid="240a2cc4-4516-4a82-a406-0cdeeb802391" x="10" y="0" width="680" height="150" evaluationTime="Report" linkType="None" linkTarget="Self">
+			<dataset kind="category">
+				<series>
+					<seriesExpression><![CDATA["Monto"]]></seriesExpression>
+					<categoryExpression><![CDATA[$F{FechaTransaccionGrafico}]]></categoryExpression>
+					<valueExpression><![CDATA[$F{MontoTotalGrafico}]]></valueExpression>
+				</series>
+			</dataset>
+			<plot foregroundAlpha="1.0" categoryAxisLabelColor="#000000" categoryAxisTickLabelColor="#000000" categoryAxisLineColor="#000000" valueAxisLabelColor="#000000" valueAxisTickLabelColor="#000000" valueAxisLineColor="#000000">
+				<itemLabel/>
+				<seriesColor order="0" color="#251939"/>
+			</plot>
+		</element>
+	</title>
+	<pageHeader splitType="Stretch"/>
+	<columnHeader splitType="Stretch"/>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter splitType="Stretch"/>
+	<pageFooter splitType="Stretch"/>
+	<summary splitType="Stretch"/>
+</jasperReport>
