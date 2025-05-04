@@ -1,5 +1,6 @@
 package Forms;
 
+import finzamida.UIUtils;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -20,11 +21,12 @@ public class Main extends javax.swing.JFrame {
         setLocationRelativeTo(null);
 
         try {
-            Font customFont = loadCustomFont("Manrope-SemiBold.ttf").deriveFont(Font.PLAIN, 16);
-            setFontRecursively(PanelFondo, customFont);
+
+            Font customFont = UIUtils.loadCustomFont("Manrope-SemiBold.ttf").deriveFont(Font.PLAIN);
+            UIUtils.setFontRecursively(PanelRoundFondo, customFont);
             txtTitulo.setFont(loadCustomFont("Manrope-SemiBold.ttf").deriveFont(Font.PLAIN, 50));
-            //texto.setFont(loadCustomFont("Manrope-SemiBold.ttf").deriveFont(Font.PLAIN, 20));
-            //text.setBorder(null);
+            texto.setFont(loadCustomFont("Manrope-SemiBold.ttf").deriveFont(Font.PLAIN, 20));
+            text.setBorder(null);
             //text1.setBorder(null);
             //text1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
             //text1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -37,40 +39,31 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        PanelFondo = new javax.swing.JPanel();
+        PanelRoundFondo = new javax.swing.JPanel();
         txtTitulo = new javax.swing.JLabel();
-        jPanel2 = new StatsPanel();
-        btnDashboard = new Items.MyButton();
         Logo = new LogoPanel();
         jButton4 = new javax.swing.JButton();
         txtEslogan1 = new javax.swing.JLabel();
         text = new javax.swing.JScrollPane();
         texto = new javax.swing.JTextArea();
+        jPanel1 = new javax.swing.JPanel();
+        btnIniciarSesion = new Items.MyButton();
+        btnAdmin = new Items.MyButton();
+        ImagePanel1 = new StatsPanel();
+        jPanel2 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        PanelFondo.setBackground(new java.awt.Color(37, 25, 57));
+        PanelRoundFondo.setBackground(new java.awt.Color(37, 25, 57));
+        PanelRoundFondo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtTitulo.setBackground(new java.awt.Color(255, 255, 255));
         txtTitulo.setForeground(new java.awt.Color(255, 255, 255));
         txtTitulo.setText("Finzamida");
-
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        btnDashboard.setForeground(new java.awt.Color(55, 0, 43));
-        btnDashboard.setText("Iniciar sesión");
-        btnDashboard.setBorderColor(new java.awt.Color(55, 36, 85));
-        btnDashboard.setColor(new java.awt.Color(226, 232, 247));
-        btnDashboard.setColorOver(new java.awt.Color(176, 179, 185));
-        btnDashboard.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
-        btnDashboard.setRadius(40);
-        btnDashboard.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDashboardActionPerformed(evt);
-            }
-        });
+        PanelRoundFondo.add(txtTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 130, 620, 70));
 
         Logo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        PanelRoundFondo.add(Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 70, 180, 180));
 
         jButton4.setBackground(new java.awt.Color(255, 51, 51));
         jButton4.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
@@ -81,11 +74,13 @@ public class Main extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
+        PanelRoundFondo.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1412, 6, -1, -1));
 
         txtEslogan1.setBackground(new java.awt.Color(255, 255, 255));
         txtEslogan1.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
         txtEslogan1.setForeground(new java.awt.Color(255, 255, 255));
         txtEslogan1.setText("Toma control de tus finanzas");
+        PanelRoundFondo.add(txtEslogan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 270, 761, 90));
 
         texto.setEditable(false);
         texto.setBackground(new java.awt.Color(37, 25, 57));
@@ -93,92 +88,105 @@ public class Main extends javax.swing.JFrame {
         texto.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         texto.setForeground(new java.awt.Color(255, 255, 255));
         texto.setRows(5);
-        texto.setText("Zen Dental Studio brings you a modern, calming experience \nthat leaves your teeth healthy and your soul rejuvenated.\n\nCome experience the modern, transformative way to receive \ndental care in San Francisco and Mountain View.");
+        texto.setText("Finzamida es una aplicación de finanzas personales \nque facilita la gestión del dinero. \nEstá diseñada para optimizar el seguimiento de gastos y ayudarte \na ahorrar dinero.");
         texto.setBorder(null);
         texto.setCaretColor(new java.awt.Color(37, 25, 57));
         text.setViewportView(texto);
 
-        javax.swing.GroupLayout PanelFondoLayout = new javax.swing.GroupLayout(PanelFondo);
-        PanelFondo.setLayout(PanelFondoLayout);
-        PanelFondoLayout.setHorizontalGroup(
-            PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelFondoLayout.createSequentialGroup()
-                .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelFondoLayout.createSequentialGroup()
-                        .addGap(74, 74, 74)
-                        .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtTitulo)
-                            .addComponent(Logo, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(PanelFondoLayout.createSequentialGroup()
-                        .addGap(77, 77, 77)
-                        .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(text, javax.swing.GroupLayout.PREFERRED_SIZE, 620, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 253, Short.MAX_VALUE)
-                .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelFondoLayout.createSequentialGroup()
-                        .addComponent(jButton4)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelFondoLayout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(64, 64, 64))))
-            .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(PanelFondoLayout.createSequentialGroup()
-                    .addGap(84, 84, 84)
-                    .addComponent(txtEslogan1, javax.swing.GroupLayout.PREFERRED_SIZE, 761, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(596, Short.MAX_VALUE)))
+        PanelRoundFondo.add(text, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 380, 700, 180));
+
+        jPanel1.setBackground(new java.awt.Color(74, 60, 99));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 910, Short.MAX_VALUE)
         );
-        PanelFondoLayout.setVerticalGroup(
-            PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelFondoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton4)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelFondoLayout.createSequentialGroup()
-                .addContainerGap(49, Short.MAX_VALUE)
-                .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(PanelFondoLayout.createSequentialGroup()
-                        .addComponent(Logo, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtTitulo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(text, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(45, 45, 45)
-                        .addComponent(btnDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(39, 39, 39))
-            .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(PanelFondoLayout.createSequentialGroup()
-                    .addGap(287, 287, 287)
-                    .addComponent(txtEslogan1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(339, Short.MAX_VALUE)))
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
         );
+
+        PanelRoundFondo.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 730, 910, 40));
+
+        btnIniciarSesion.setForeground(new java.awt.Color(55, 0, 43));
+        btnIniciarSesion.setText("Iniciar sesión");
+        btnIniciarSesion.setBorderColor(new java.awt.Color(55, 36, 85));
+        btnIniciarSesion.setColor(new java.awt.Color(226, 232, 247));
+        btnIniciarSesion.setColorOver(new java.awt.Color(176, 179, 185));
+        btnIniciarSesion.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        btnIniciarSesion.setRadius(40);
+        btnIniciarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIniciarSesionActionPerformed(evt);
+            }
+        });
+        PanelRoundFondo.add(btnIniciarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 610, 189, 44));
+
+        btnAdmin.setForeground(new java.awt.Color(55, 0, 43));
+        btnAdmin.setText("Administrador");
+        btnAdmin.setBorderColor(new java.awt.Color(55, 36, 85));
+        btnAdmin.setColor(new java.awt.Color(226, 232, 247));
+        btnAdmin.setColorOver(new java.awt.Color(176, 179, 185));
+        btnAdmin.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        btnAdmin.setRadius(40);
+        btnAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdminActionPerformed(evt);
+            }
+        });
+        PanelRoundFondo.add(btnAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 610, 189, 44));
+
+        ImagePanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        PanelRoundFondo.add(ImagePanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 80, 530, 620));
+
+        jPanel2.setBackground(new java.awt.Color(74, 60, 99));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 910, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+
+        PanelRoundFondo.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 910, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PanelFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(PanelRoundFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PanelFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(PanelRoundFondo, javax.swing.GroupLayout.PREFERRED_SIZE, 768, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashboardActionPerformed
-        Login login = new Login();
-        login.show();
+    private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
+        new Login().setVisible(true);
         this.dispose();
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnDashboardActionPerformed
+    }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAdminActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -213,10 +221,13 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel ImagePanel1;
     private javax.swing.JPanel Logo;
-    private javax.swing.JPanel PanelFondo;
-    private Items.MyButton btnDashboard;
+    private javax.swing.JPanel PanelRoundFondo;
+    private Items.MyButton btnAdmin;
+    private Items.MyButton btnIniciarSesion;
     private javax.swing.JButton jButton4;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane text;
     private javax.swing.JTextArea texto;
@@ -244,16 +255,6 @@ public class Main extends javax.swing.JFrame {
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
             return new Font("Arial", Font.PLAIN, 16);
-        }
-    }
-
-    private void setFontRecursively(Container container, Font font) {
-        Component[] components = container.getComponents();
-        for (Component component : components) {
-            if (component instanceof Container) {
-                setFontRecursively((Container) component, font);
-            }
-            component.setFont(font);
         }
     }
 

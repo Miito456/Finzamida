@@ -5,17 +5,26 @@ import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import finzamida.Conexion;
 import finzamida.UIUtils;
-import java.awt.Font;
 import java.sql.Connection;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.view.*;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.chart.plot.PiePlot;
+import org.jfree.chart.labels.PieSectionLabelGenerator;
+import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
+import java.awt.Font;
+import java.awt.Color;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.text.DecimalFormat;
 
 public class Dashboard extends javax.swing.JFrame {
 
@@ -49,7 +58,7 @@ public class Dashboard extends javax.swing.JFrame {
         cargarTotalIngresos();
         cargarTotalEgresos();
         cargarSaldoTotal();
-
+        cargarGraficoCategorias();
     }
 
     @SuppressWarnings("unchecked")
@@ -289,7 +298,7 @@ public class Dashboard extends javax.swing.JFrame {
 
         lblSaldo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblSaldo.setForeground(new java.awt.Color(0, 0, 0));
-        lblSaldo.setText("Saldo");
+        lblSaldo.setText("Transacciones");
 
         lblSaldoFecha.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         lblSaldoFecha.setForeground(new java.awt.Color(102, 102, 102));
@@ -357,7 +366,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(lblCategorias)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblCategoriasFecha)
-                .addContainerGap(517, Short.MAX_VALUE))
+                .addContainerGap(514, Short.MAX_VALUE))
         );
 
         PanelRoundFondo.add(PanelIngresos, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 100, 650, 590));
@@ -480,46 +489,152 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel lblSaldoProfit;
     // End of variables declaration//GEN-END:variables
 
-    private void cargarSaldoTotal() {
-        String consulta = "SELECT SUM(Saldo) AS saldoTotal FROM cuenta WHERE idUsuario = ?";
+    private void cargarGraficoCategorias() {
+        DefaultPieDataset dataset = new DefaultPieDataset();
+        String consulta = "SELECT c.Nombre, SUM(t.Monto) AS TotalPagado "
+                + "FROM categorias c "
+                + "INNER JOIN transacciones t ON c.idCategoria = t.idCategoria "
+                + "WHERE t.idUsuario = ? AND t.Tipo = 'Egreso' AND t.Fecha >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) "
+                + "GROUP BY c.Nombre "
+                + "HAVING SUM(t.Monto) > 0"; // Solo categorías con pagos
+
         try (PreparedStatement ps = reg.prepareStatement(consulta)) {
             ps.setInt(1, idUsuario);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                double saldoTotal = rs.getDouble("saldoTotal");
-                lblSaldoProfit.setText(String.format("%.2f MXN", saldoTotal));
-                lblSaldoProfit.setForeground(new java.awt.Color(0, 0, 0));
+            while (rs.next()) {
+                String nombreCategoria = rs.getString("Nombre");
+                double totalPagado = rs.getDouble("TotalPagado");
+                dataset.setValue(nombreCategoria, totalPagado);
             }
         } catch (SQLException e) {
-            System.out.println("Error al obtener saldo total: " + e.getMessage());
+            System.out.println("Error al cargar datos para el gráfico de categorías: " + e.getMessage());
+        }
+
+        JFreeChart chart = ChartFactory.createPieChart(
+                "", // Título del gráfico
+                dataset, // Datos
+                true, // Incluir leyenda
+                true, // Tooltips
+                false // URLs
+        );
+
+     
+        // Cambiar la fuente del título
+        Font tituloFont = new Font("Manrope-SemiBold", Font.BOLD, 18);
+        chart.getTitle().setFont(tituloFont);
+        chart.getTitle().setPaint(new Color(37, 25, 57));
+
+        // Obtener el plot del gráfico de pastel
+        PiePlot plot = (PiePlot) chart.getPlot();
+
+        // Cambiar la fuente de las etiquetas de las secciones
+        Font etiquetaFont = new Font("Manrope-SemiBold", Font.PLAIN, 14);
+        plot.setLabelFont(etiquetaFont);
+        plot.setLabelBackgroundPaint(new Color(245, 245, 245));
+        plot.setLabelOutlinePaint(null);
+        plot.setShadowPaint(null);
+
+        // Cambiar los colores de las secciones del pastel
+        Color[] coloresPersonalizados = {
+            new Color(123, 104, 238), // Morado
+            new Color(255, 165, 0), // Naranja
+            new Color(46, 139, 87), // Verde
+            new Color(255, 99, 71), // Rojo
+            new Color(70, 130, 180), // Azul
+            new Color(255, 215, 0), // Dorado
+        };
+        int i = 0;
+        for (Object key : dataset.getKeys()) {
+            plot.setSectionPaint((Comparable) key, coloresPersonalizados[i % coloresPersonalizados.length]);
+            i++;
+        }
+
+        chart.setBackgroundPaint(new Color(245, 245, 245)); 
+        plot.setBackgroundPaint(new Color(245, 245, 245));
+        plot.setOutlineVisible(false);
+
+        PieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator("{0}: {1} ({2})", new DecimalFormat("###,###.##"), new DecimalFormat("0.0%"));
+        plot.setLabelGenerator(labelGenerator);
+
+        ChartPanel chartPanel = new ChartPanel(chart);
+
+        int x = 20; 
+        int y = 20 + lblCategorias.getHeight() + 5 + lblCategoriasFecha.getHeight() + 5; 
+        int ancho = PanelIngresos.getWidth() - 40; 
+        int alto = PanelIngresos.getHeight() - 100; 
+        chartPanel.setBounds(x, y, ancho, alto);
+
+        PanelIngresos.removeAll();
+        PanelIngresos.add(lblCategorias);
+        PanelIngresos.add(lblCategoriasFecha);
+        PanelIngresos.add(chartPanel);
+
+        PanelIngresos.revalidate();
+        PanelIngresos.repaint();
+    }
+
+    private void cargarSaldoTotal() {
+        double totalIngresosSemana = 0.0;
+        double totalEgresosSemana = 0.0;
+
+        String consultaIngresos = "SELECT SUM(Monto) AS totalIngresos FROM transacciones WHERE idUsuario = ? AND Tipo = 'Ingreso' AND Fecha >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)";
+        String consultaEgresos = "SELECT SUM(Monto) AS totalEgresos FROM transacciones WHERE idUsuario = ? AND Tipo = 'Egreso' AND Fecha >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)";
+
+        try (PreparedStatement psIngresos = reg.prepareStatement(consultaIngresos); PreparedStatement psEgresos = reg.prepareStatement(consultaEgresos)) {
+
+            psIngresos.setInt(1, idUsuario);
+            ResultSet rsIngresos = psIngresos.executeQuery();
+            if (rsIngresos.next()) {
+                totalIngresosSemana = rsIngresos.getDouble("totalIngresos");
+            }
+
+            psEgresos.setInt(1, idUsuario);
+            ResultSet rsEgresos = psEgresos.executeQuery();
+            if (rsEgresos.next()) {
+                totalEgresosSemana = rsEgresos.getDouble("totalEgresos");
+            }
+
+            double saldoSemanal = totalIngresosSemana - totalEgresosSemana;
+            lblSaldoProfit.setText(String.format("%.2f MXN", saldoSemanal));
+            lblSaldoProfit.setForeground(new java.awt.Color(0, 0, 0)); 
+
+        } catch (SQLException e) {
+            System.out.println("Error al calcular el saldo semanal: " + e.getMessage());
+            lblSaldoProfit.setText("Error"); 
         }
     }
 
     private void cargarTotalIngresos() {
-        String consulta = "SELECT SUM(Monto) AS totalIngresos FROM transacciones WHERE idUsuario = ? AND Tipo = 'Ingreso'";
+        String consulta = "SELECT SUM(Monto) AS totalIngresos FROM transacciones WHERE idUsuario = ? AND Tipo = 'Ingreso' AND Fecha >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)";
         try (PreparedStatement ps = reg.prepareStatement(consulta)) {
             ps.setInt(1, idUsuario);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 double totalIngresos = rs.getDouble("totalIngresos");
                 lblCobrosProfit.setText(String.format("%.2f MXN", totalIngresos));
+            } else {
+                lblCobrosProfit.setText("0.00 MXN"); 
             }
         } catch (SQLException e) {
-            System.out.println("Error al obtener ingresos: " + e.getMessage());
+            System.out.println("Error al obtener ingresos de la semana: " + e.getMessage());
+            lblCobrosProfit.setText("Error"); 
         }
     }
 
     private void cargarTotalEgresos() {
-        String consulta = "SELECT SUM(Monto) AS totalEgresos FROM transacciones WHERE idUsuario = ? AND Tipo = 'Egreso'";
+        String consulta = "SELECT SUM(Monto) AS totalEgresos FROM transacciones WHERE idUsuario = ? AND Tipo = 'Egreso' AND Fecha >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)";
         try (PreparedStatement ps = reg.prepareStatement(consulta)) {
             ps.setInt(1, idUsuario);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 double totalEgresos = rs.getDouble("totalEgresos");
                 lblPagosProfit.setText(String.format("%.2f MXN", totalEgresos));
+            } else {
+                lblPagosProfit.setText("0.00 MXN"); 
             }
         } catch (SQLException e) {
-            System.out.println("Error al obtener egresos: " + e.getMessage());
+            System.out.println("Error al obtener egresos de la semana: " + e.getMessage());
+            lblPagosProfit.setText("Error"); 
         }
     }
 

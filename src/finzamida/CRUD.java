@@ -216,7 +216,7 @@ public class CRUD {
         }
     }
 
-        // Actualizar categoría
+    // Actualizar categoría
     public void actualizarCategoria(Categoria categoria) {
         String sentenciaSQL = "UPDATE Categorias SET "
                 + "Nombre = '" + categoria.getNombre() + "' "
@@ -230,6 +230,79 @@ public class CRUD {
         } catch (SQLException sqle) {
             System.out.println("Error al actualizar categoría: " + sqle.getMessage());
             sqle.printStackTrace();
+        }
+    }
+
+    public void altaUsuarioConCategorias(Usuarios usuario) {
+        PreparedStatement psUsuario = null;
+        PreparedStatement psCategoria = null;
+        ResultSet rs = null;
+
+        String insertarUsuario = "INSERT INTO Usuarios (CURP, RFC, Nombre, ApellidoPat, ApellidoMat, CorreoElectronico, Contrasena, FechaAlta) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String insertarCategoria = "INSERT INTO Categorias (idUsuario, Nombre) VALUES (?, ?)";
+
+        try {
+            reg.setAutoCommit(false);
+            
+            psUsuario = reg.prepareStatement(insertarUsuario, Statement.RETURN_GENERATED_KEYS);
+            psUsuario.setString(1, usuario.getCURP());
+            psUsuario.setString(2, usuario.getRFC());
+            psUsuario.setString(3, usuario.getNombre());
+            psUsuario.setString(4, usuario.getApellidoPat());
+            psUsuario.setString(5, usuario.getApellidoMat());
+            psUsuario.setString(6, usuario.getCorreoElectronico());
+            psUsuario.setString(7, usuario.getContrasena());
+            psUsuario.setString(8, usuario.getFechaAlta());
+
+            int filasUsuario = psUsuario.executeUpdate();
+
+            if (filasUsuario == 0) {
+                throw new SQLException("No se pudo crear el usuario.");
+            }
+            
+            rs = psUsuario.getGeneratedKeys();
+            int idUsuario = -1;
+            if (rs.next()) {
+                idUsuario = rs.getInt(1);
+            } else {
+                throw new SQLException("No se pudo obtener el ID del nuevo usuario.");
+            }
+
+            psCategoria = reg.prepareStatement(insertarCategoria);
+            psCategoria.setInt(1, idUsuario);
+            psCategoria.setString(2, "Categoría 1");
+            psCategoria.executeUpdate();
+            psCategoria.setInt(1, idUsuario);
+            psCategoria.setString(2, "Categoría 2");
+            psCategoria.executeUpdate();
+
+            reg.commit(); 
+            System.out.println("Usuario y categorías creados exitosamente.");
+
+        } catch (SQLException sqle) {
+            try {
+                reg.rollback(); 
+                System.out.println("Se hizo rollback por un error: " + sqle.getMessage());
+            } catch (SQLException e) {
+                System.out.println("Error haciendo rollback: " + e.getMessage());
+            }
+            sqle.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (psUsuario != null) {
+                    psUsuario.close();
+                }
+                if (psCategoria != null) {
+                    psCategoria.close();
+                }
+                reg.setAutoCommit(true); 
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 

@@ -36,6 +36,8 @@ ORDER BY
 				</series>
 			</dataset>
 			<plot foregroundAlpha="1.0" categoryAxisLabelColor="#000000" categoryAxisTickLabelColor="#000000" categoryAxisLineColor="#000000" valueAxisLabelColor="#000000" valueAxisTickLabelColor="#000000" valueAxisLineColor="#000000">
+				<categoryAxisLabelFont fontSize="7.0"/>
+				<categoryAxisTickLabelFont fontSize="9.0"/>
 				<itemLabel/>
 				<seriesColor order="0" color="#251939"/>
 			</plot>

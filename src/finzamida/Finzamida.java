@@ -4,7 +4,24 @@ import Forms.Dashboard;
 import Forms.Main;
 
 public class Finzamida {
-
+    
+//      public static void main(String[] args) {
+//        CRUD crud = new CRUD();
+//
+//        // Usando tu constructor directamente
+//        Usuarios nuevoUsuario = new Usuarios(
+//            "CURP1234567",
+//            "RFC987654",
+//            "Juan",
+//            "Pérez",
+//            "López",
+//            "juan.perez@example.com",
+//            "miPasswordSeguro123",
+//            "2025-04-28"
+//        );
+//
+//        crud.altaUsuarioConCategorias(nuevoUsuario);
+//    }
      public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

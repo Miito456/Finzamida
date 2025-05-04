@@ -165,20 +165,7 @@ ORDER BY
 			</element>
 		</band>
 	</detail>
-	<columnFooter height="48" splitType="Stretch">
-		<element kind="textField" uuid="ecac0556-4af0-436e-8b5c-282b65556341" x="97" y="1" width="192" height="20" fontName="MS UI Gothic" fontSize="14.0" bold="true" hTextAlign="Left">
-			<expression><![CDATA["Total de ingresos semanales: $"]]></expression>
-		</element>
-		<element kind="textField" uuid="4cb33e2e-fb11-4a5a-bb52-6bbc9989a835" x="290" y="1" width="104" height="20" fontName="MS UI Gothic" fontSize="14.0">
-			<expression><![CDATA[$V{totalIngresos}]]></expression>
-		</element>
-		<element kind="textField" uuid="cd00de62-ce8f-4916-b8b6-c1963bab3fd1" x="97" y="21" width="192" height="20" fontName="MS UI Gothic" fontSize="14.0" bold="true" hTextAlign="Left">
-			<expression><![CDATA["Total de egresos semanales: $"]]></expression>
-		</element>
-		<element kind="textField" uuid="cdf34b13-faeb-4ff6-b08e-ec73de0f325c" x="285" y="20" width="120" height="20" fontName="MS UI Gothic" fontSize="14.0">
-			<expression><![CDATA[$V{totalEgresos}]]></expression>
-		</element>
-	</columnFooter>
+	<columnFooter height="15" splitType="Stretch"/>
 	<pageFooter height="21" splitType="Stretch">
 		<element kind="textField" uuid="95484ca0-40b4-4752-95d8-1afbc33c820b" x="666" y="0" width="131" height="20" forecolor="#000000" fontSize="12.0" pattern="EEEEE dd MMMMM yyyy" bold="false" hTextAlign="Right" style="Column header">
 			<expression><![CDATA[new java.util.Date()]]></expression>
@@ -188,7 +175,7 @@ ORDER BY
 		</element>
 	</pageFooter>
 	<summary height="494" splitType="Stretch">
-		<element kind="chart" chartType="bar" uuid="5098d886-3e93-48ed-8782-1f22afd7a8f5" x="96" y="20" width="383" height="144" evaluationTime="Report">
+		<element kind="chart" chartType="bar" uuid="5098d886-3e93-48ed-8782-1f22afd7a8f5" x="96" y="56" width="383" height="144" evaluationTime="Report">
 			<dataset kind="category">
 				<series>
 					<seriesExpression><![CDATA["Monto"]]></seriesExpression>
@@ -201,28 +188,40 @@ ORDER BY
 				<seriesColor order="0" color="#251939"/>
 			</plot>
 		</element>
-		<element kind="subreport" uuid="8e588262-8a58-4a1b-9494-6fc3dafd3d32" x="50" y="192" width="695" height="148" forecolor="#251939" backcolor="#251939" style="Title">
+		<element kind="subreport" uuid="8e588262-8a58-4a1b-9494-6fc3dafd3d32" x="50" y="211" width="695" height="148" forecolor="#251939" backcolor="#251939" style="Title">
 			<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
                         <expression><![CDATA["Reports/GraficoMontoSemanal.jasper"]]></expression>
 			<parameter name="idUsuario">
 				<expression><![CDATA[$P{idUsuario}]]></expression>
 			</parameter>
 		</element>
-		<element kind="staticText" uuid="fabbc4c4-aff3-4084-817c-4b8297bd9710" x="96" y="0" width="292" height="20" fontName="MS UI Gothic" fontSize="14.0">
+		<element kind="staticText" uuid="fabbc4c4-aff3-4084-817c-4b8297bd9710" x="96" y="38" width="292" height="20" fontName="MS UI Gothic" fontSize="14.0">
 			<text><![CDATA[Comparación entre los ingresos y los egresos ]]></text>
 		</element>
-		<element kind="subreport" uuid="f1dd86e1-a736-4f62-b4f0-23ca0e658f1d" x="50" y="370" width="695" height="120">
+		<element kind="subreport" uuid="f1dd86e1-a736-4f62-b4f0-23ca0e658f1d" x="50" y="374" width="695" height="120">
 			<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
                         <expression><![CDATA["Reports/GraficoMontoSemanalEgresos.jasper"]]></expression>
 			<parameter name="idUsuario">
 				<expression><![CDATA[$P{idUsuario}]]></expression>
 			</parameter>
 		</element>
-		<element kind="staticText" uuid="c854329c-ac5d-417a-85ca-acaa8b522ea1" x="97" y="173" width="292" height="15" fontName="MS UI Gothic" fontSize="14.0">
+		<element kind="staticText" uuid="c854329c-ac5d-417a-85ca-acaa8b522ea1" x="97" y="204" width="292" height="15" fontName="MS UI Gothic" fontSize="14.0">
 			<text><![CDATA[Ingresos la última semana]]></text>
 		</element>
-		<element kind="staticText" uuid="09c5bd1e-ed66-49dd-9ebc-6d530f2a9ac2" x="96" y="350" width="292" height="15" fontName="MS UI Gothic" fontSize="14.0">
+		<element kind="staticText" uuid="09c5bd1e-ed66-49dd-9ebc-6d530f2a9ac2" x="96" y="371" width="292" height="15" fontName="MS UI Gothic" fontSize="14.0">
 			<text><![CDATA[Egresos la última semana]]></text>
+		</element>
+		<element kind="textField" uuid="ecac0556-4af0-436e-8b5c-282b65556341" x="96" y="1" width="192" height="20" fontName="MS UI Gothic" fontSize="14.0" bold="true" hTextAlign="Left">
+			<expression><![CDATA["Total de ingresos semanales: $"]]></expression>
+		</element>
+		<element kind="textField" uuid="4cb33e2e-fb11-4a5a-bb52-6bbc9989a835" x="290" y="1" width="104" height="20" fontName="MS UI Gothic" fontSize="14.0">
+			<expression><![CDATA[$V{totalIngresos}]]></expression>
+		</element>
+		<element kind="textField" uuid="cd00de62-ce8f-4916-b8b6-c1963bab3fd1" x="96" y="20" width="192" height="20" fontName="MS UI Gothic" fontSize="14.0" bold="true" hTextAlign="Left">
+			<expression><![CDATA["Total de egresos semanales: $"]]></expression>
+		</element>
+		<element kind="textField" uuid="cdf34b13-faeb-4ff6-b08e-ec73de0f325c" x="285" y="20" width="120" height="20" fontName="MS UI Gothic" fontSize="14.0">
+			<expression><![CDATA[$V{totalEgresos}]]></expression>
 		</element>
 	</summary>
 </jasperReport>

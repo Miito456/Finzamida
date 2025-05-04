@@ -43,6 +43,8 @@ public class Login extends javax.swing.JFrame {
         txtPassword = new Items.PasswordField();
         btnDashboard1 = new Items.MyButton();
         btnCuentas = new Items.MyButton();
+        lblCobrosFecha2 = new javax.swing.JLabel();
+        btnCuentas1 = new Items.MyButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -68,14 +70,18 @@ public class Login extends javax.swing.JFrame {
         PanelIngresos.setRoundBottomRight(50);
         PanelIngresos.setRoundTopLeft(50);
         PanelIngresos.setRoundTopRight(50);
+        PanelIngresos.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblCobros1.setFont(new java.awt.Font("Segoe UI", 0, 34)); // NOI18N
         lblCobros1.setForeground(new java.awt.Color(0, 0, 0));
         lblCobros1.setText("Bienvenido de nuevo a Finzamida ");
+        PanelIngresos.add(lblCobros1, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 58, 595, -1));
 
+        lblCobrosFecha1.setBackground(new java.awt.Color(245, 245, 245));
         lblCobrosFecha1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         lblCobrosFecha1.setForeground(new java.awt.Color(102, 102, 102));
-        lblCobrosFecha1.setText("Gestiona todo mucho mejor");
+        lblCobrosFecha1.setText("¿No tienes cuenta? ");
+        PanelIngresos.add(lblCobrosFecha1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 360, 180, -1));
 
         txtUsuario.setBackground(new java.awt.Color(245, 245, 245));
         txtUsuario.setForeground(new java.awt.Color(0, 0, 0));
@@ -88,6 +94,7 @@ public class Login extends javax.swing.JFrame {
                 txtUsuarioActionPerformed(evt);
             }
         });
+        PanelIngresos.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 186, 528, -1));
 
         txtPassword.setBackground(new java.awt.Color(245, 245, 245));
         txtPassword.setForeground(new java.awt.Color(0, 0, 0));
@@ -95,6 +102,7 @@ public class Login extends javax.swing.JFrame {
         txtPassword.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         txtPassword.setLabelText("Contraseña");
         txtPassword.setLineColor(new java.awt.Color(116, 76, 68));
+        PanelIngresos.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 272, 528, -1));
 
         btnDashboard1.setForeground(new java.awt.Color(55, 0, 43));
         btnDashboard1.setText("Regresar");
@@ -108,6 +116,7 @@ public class Login extends javax.swing.JFrame {
                 btnDashboard1ActionPerformed(evt);
             }
         });
+        PanelIngresos.add(btnDashboard1, new org.netbeans.lib.awtextra.AbsoluteConstraints(404, 440, 189, 44));
 
         btnCuentas.setForeground(new java.awt.Color(55, 0, 43));
         btnCuentas.setText("Iniciar sesión");
@@ -121,42 +130,28 @@ public class Login extends javax.swing.JFrame {
                 btnCuentasActionPerformed(evt);
             }
         });
+        PanelIngresos.add(btnCuentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(66, 440, 189, 44));
 
-        javax.swing.GroupLayout PanelIngresosLayout = new javax.swing.GroupLayout(PanelIngresos);
-        PanelIngresos.setLayout(PanelIngresosLayout);
-        PanelIngresosLayout.setHorizontalGroup(
-            PanelIngresosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelIngresosLayout.createSequentialGroup()
-                .addGap(0, 55, Short.MAX_VALUE)
-                .addGroup(PanelIngresosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(PanelIngresosLayout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addComponent(btnCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(149, 149, 149)
-                        .addComponent(btnDashboard1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lblCobrosFecha1, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCobros1, javax.swing.GroupLayout.PREFERRED_SIZE, 595, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        PanelIngresosLayout.setVerticalGroup(
-            PanelIngresosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelIngresosLayout.createSequentialGroup()
-                .addGap(58, 58, 58)
-                .addComponent(lblCobros1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblCobrosFecha1)
-                .addGap(54, 54, 54)
-                .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
-                .addGroup(PanelIngresosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDashboard1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(106, 106, 106))
-        );
+        lblCobrosFecha2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        lblCobrosFecha2.setForeground(new java.awt.Color(102, 102, 102));
+        lblCobrosFecha2.setText("Gestiona todo mucho mejor");
+        PanelIngresos.add(lblCobrosFecha2, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 120, 495, -1));
+
+        btnCuentas1.setBackground(new java.awt.Color(245, 245, 245));
+        btnCuentas1.setForeground(new java.awt.Color(51, 51, 255));
+        btnCuentas1.setText("Registrarse");
+        btnCuentas1.setBorderColor(new java.awt.Color(245, 245, 245));
+        btnCuentas1.setColor(new java.awt.Color(245, 245, 245));
+        btnCuentas1.setColorClick(new java.awt.Color(245, 245, 245));
+        btnCuentas1.setColorOver(new java.awt.Color(245, 245, 245));
+        btnCuentas1.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        btnCuentas1.setRadius(40);
+        btnCuentas1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCuentas1ActionPerformed(evt);
+            }
+        });
+        PanelIngresos.add(btnCuentas1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 350, 189, 44));
 
         PanelRoundFondo.add(PanelIngresos, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 100, 650, 590));
 
@@ -208,7 +203,8 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCuentasActionPerformed
 
     private void btnDashboard1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashboard1ActionPerformed
-
+        new Main().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnDashboard1ActionPerformed
 
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
@@ -218,6 +214,11 @@ public class Login extends javax.swing.JFrame {
     private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUsuarioActionPerformed
+
+    private void btnCuentas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCuentas1ActionPerformed
+        new AltaUsuario().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCuentas1ActionPerformed
 
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -255,9 +256,11 @@ public class Login extends javax.swing.JFrame {
     private Items.PanelRound PanelRoundFondo;
     private javax.swing.JButton btnCerrar;
     private Items.MyButton btnCuentas;
+    private Items.MyButton btnCuentas1;
     private Items.MyButton btnDashboard1;
     private javax.swing.JLabel lblCobros1;
     private javax.swing.JLabel lblCobrosFecha1;
+    private javax.swing.JLabel lblCobrosFecha2;
     private Items.PasswordField txtPassword;
     private Items.TextField txtUsuario;
     // End of variables declaration//GEN-END:variables
