@@ -27,6 +27,7 @@ public class Cuentas extends javax.swing.JFrame {
         setUndecorated(true);
         initComponents();
         setLocationRelativeTo(null);
+        
 
         try {
             Font customFont = UIUtils.loadCustomFont("Manrope-SemiBold.ttf").deriveFont(Font.PLAIN);
@@ -448,7 +449,7 @@ public class Cuentas extends javax.swing.JFrame {
 
     private String numeroCuentaCompletoPanel0;
 
-    void cargarCuentas() {
+ void cargarCuentas() {
         String sql = "SELECT idCuenta, Nombre, Tipo, Banco, NumeroCuenta, SUBSTR(NumeroCuenta, -4) AS ultimos4, Saldo FROM cuenta WHERE idUsuario = ?";
 
         try (PreparedStatement pst = reg.prepareStatement(sql)) {

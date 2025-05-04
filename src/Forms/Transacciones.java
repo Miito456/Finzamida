@@ -563,7 +563,8 @@ public class Transacciones extends javax.swing.JFrame {
                     + "FROM transacciones t "
                     + "JOIN categorias c ON t.idCategoria = c.idCategoria "
                     + "JOIN cuenta cu ON t.idCuenta = cu.idCuenta "
-                    + "WHERE t.idUsuario = ?";
+                    + "WHERE t.idUsuario = ? "
+                    + "ORDER BY t.Fecha DESC"; // Se agregó esta línea para ordenar por fecha descendente
             pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, idUsuario);
             rs = pstmt.executeQuery();
