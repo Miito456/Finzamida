@@ -45,6 +45,8 @@ public class Login extends javax.swing.JFrame {
         btnCuentas = new Items.MyButton();
         lblCobrosFecha2 = new javax.swing.JLabel();
         btnCuentas1 = new Items.MyButton();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -155,6 +157,36 @@ public class Login extends javax.swing.JFrame {
 
         PanelRoundFondo.add(PanelIngresos, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 100, 650, 590));
 
+        jPanel2.setBackground(new java.awt.Color(74, 60, 99));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 910, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+
+        PanelRoundFondo.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 910, 40));
+
+        jPanel1.setBackground(new java.awt.Color(74, 60, 99));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 910, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+
+        PanelRoundFondo.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 730, 910, 40));
+
         PanelPrincipal.add(PanelRoundFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1422, 762));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -258,6 +290,8 @@ public class Login extends javax.swing.JFrame {
     private Items.MyButton btnCuentas;
     private Items.MyButton btnCuentas1;
     private Items.MyButton btnDashboard1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblCobros1;
     private javax.swing.JLabel lblCobrosFecha1;
     private javax.swing.JLabel lblCobrosFecha2;

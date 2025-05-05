@@ -1,5 +1,6 @@
-package Forms;
+package FormsAdmin;
 
+import Forms.*;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
@@ -7,6 +8,8 @@ import finzamida.Conexion;
 import finzamida.UIUtils;
 import java.awt.Font;
 import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -20,10 +23,9 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
 
     Conexion conexion = new Conexion();
     Connection reg = conexion.getConexion();
-    private int idUsuario;
     private int mouseY;
 
-    public Cuentas(int idUsuario) {
+    public Cuentas() {
         setUndecorated(true);
         initComponents();
         setLocationRelativeTo(null);
@@ -36,7 +38,6 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
         }
         PanelRoundFondo.addMouseListener(this);
         PanelRoundFondo.addMouseMotionListener(this);
-        this.idUsuario = idUsuario;
         cargarCuentas();
     }
 
@@ -51,17 +52,18 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
         lblTipoCuenta = new javax.swing.JLabel();
         lblSaldoTotal = new javax.swing.JLabel();
         lblBanco = new javax.swing.JLabel();
-        lblUltimos4 = new javax.swing.JLabel();
+        lblUsuarioPertenece = new javax.swing.JLabel();
         lblSaldo = new javax.swing.JLabel();
         btnEditar = new Items.MyButton();
         btnEliminar = new Items.MyButton();
         btnTransacciones = new Items.MyButton();
+        lblUltimos5 = new javax.swing.JLabel();
         btnAgregarCuenta = new Items.MyButton();
         MenuBotones = new Items.PanelRound();
         Logo = new UIUtils.LogoPanel();
         btnDashboard = new Items.MyButton();
         btnCuentas = new Items.MyButton();
-        btnTransacciones2 = new Items.MyButton();
+        btnTransacciones1 = new Items.MyButton();
         btnCategorias = new Items.MyButton();
         btnCerrarSesion = new Items.MyButton();
         btnReporte = new Items.MyButton();
@@ -113,10 +115,10 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
         lblBanco.setText("[Banco]");
         PanelCuenta0.add(lblBanco, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 79, 386, -1));
 
-        lblUltimos4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        lblUltimos4.setForeground(new java.awt.Color(102, 102, 102));
-        lblUltimos4.setText("[Ultimos 4 digitos de la tarjeta]");
-        PanelCuenta0.add(lblUltimos4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 107, 386, -1));
+        lblUsuarioPertenece.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        lblUsuarioPertenece.setForeground(new java.awt.Color(102, 102, 102));
+        lblUsuarioPertenece.setText("[Usuario al que le pertenece la cuenta]");
+        PanelCuenta0.add(lblUsuarioPertenece, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 386, -1));
 
         lblSaldo.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         lblSaldo.setForeground(new java.awt.Color(102, 102, 102));
@@ -164,6 +166,11 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
             }
         });
         PanelCuenta0.add(btnTransacciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 160, 180, 44));
+
+        lblUltimos5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        lblUltimos5.setForeground(new java.awt.Color(102, 102, 102));
+        lblUltimos5.setText("[Ultimos 4 digitos de la tarjeta]");
+        PanelCuenta0.add(lblUltimos5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 107, 386, -1));
 
         PanelRoundFondo.add(PanelCuenta0, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 100, 1130, 220));
 
@@ -215,19 +222,19 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
         });
         MenuBotones.add(btnCuentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 189, 44));
 
-        btnTransacciones2.setForeground(new java.awt.Color(55, 0, 43));
-        btnTransacciones2.setText("Transacciones");
-        btnTransacciones2.setBorderColor(new java.awt.Color(55, 36, 85));
-        btnTransacciones2.setColor(new java.awt.Color(226, 232, 247));
-        btnTransacciones2.setColorOver(new java.awt.Color(176, 179, 185));
-        btnTransacciones2.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
-        btnTransacciones2.setRadius(40);
-        btnTransacciones2.addActionListener(new java.awt.event.ActionListener() {
+        btnTransacciones1.setForeground(new java.awt.Color(55, 0, 43));
+        btnTransacciones1.setText("Transacciones");
+        btnTransacciones1.setBorderColor(new java.awt.Color(55, 36, 85));
+        btnTransacciones1.setColor(new java.awt.Color(226, 232, 247));
+        btnTransacciones1.setColorOver(new java.awt.Color(176, 179, 185));
+        btnTransacciones1.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        btnTransacciones1.setRadius(40);
+        btnTransacciones1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTransacciones2ActionPerformed(evt);
+                btnTransacciones1ActionPerformed(evt);
             }
         });
-        MenuBotones.add(btnTransacciones2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 189, 44));
+        MenuBotones.add(btnTransacciones1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 189, 44));
 
         btnCategorias.setForeground(new java.awt.Color(55, 0, 43));
         btnCategorias.setText("Categorías");
@@ -258,7 +265,7 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
         MenuBotones.add(btnCerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 690, 189, 44));
 
         btnReporte.setForeground(new java.awt.Color(55, 0, 43));
-        btnReporte.setText("Reporte semanal");
+        btnReporte.setText("Usuarios");
         btnReporte.setBorderColor(new java.awt.Color(55, 36, 85));
         btnReporte.setColor(new java.awt.Color(226, 232, 247));
         btnReporte.setColorOver(new java.awt.Color(176, 179, 185));
@@ -294,24 +301,7 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
     private int idCuentaPanel0;
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        String nombre = lblNombreCuenta.getText();
-        String tipo = lblTipoCuenta.getText();
-        String banco = lblBanco.getText();
-        String saldoStr = lblSaldoTotal.getText().replace(" MXN", "").trim();
-        double saldo = 0.0;
-        try {
-            saldo = Double.parseDouble(saldoStr);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Error al leer el saldo.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        if (idCuentaPanel0 != -1) {
-            EditarCuentaDialog editarDialog = new EditarCuentaDialog(this, this, idCuentaPanel0, nombre, tipo, banco, numeroCuentaCompletoPanel0, saldo);
-            editarDialog.setVisible(true);
-        } else {
-            JOptionPane.showMessageDialog(this, "No se pudo obtener el ID de la cuenta para editar.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        btnEditarActionPerformed(evt);
     }//GEN-LAST:event_btnEditarActionPerformed
 
 
@@ -333,38 +323,38 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
         UIManager.put("defaultFont", new Font(FlatRobotoFont.FAMILY, Font.PLAIN, 13));
         FlatMacDarkLaf.setup();
         String nombreCuenta = lblNombreCuenta.getText();
-        Transacciones transaccionesForm = new Transacciones(idUsuario, nombreCuenta);
+        Transacciones transaccionesForm = new Transacciones();
         transaccionesForm.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnTransaccionesActionPerformed
 
     private void btnAgregarCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCuentaActionPerformed
-        AgregarCuentaDialog agregarDialog = new AgregarCuentaDialog(this, true, this, idUsuario);
+        AgregarCuentaDialog agregarDialog = new AgregarCuentaDialog(this, true, this);
         agregarDialog.setVisible(true);
     }//GEN-LAST:event_btnAgregarCuentaActionPerformed
 
     private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashboardActionPerformed
-        new Dashboard(idUsuario).setVisible(true);
+        new DashboardAdmin().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnDashboardActionPerformed
 
     private void btnCuentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCuentasActionPerformed
-        new Cuentas(idUsuario).setVisible(true);
+        new Cuentas().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCuentasActionPerformed
 
-    private void btnTransacciones2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransacciones2ActionPerformed
+    private void btnTransacciones1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransacciones1ActionPerformed
         FlatRobotoFont.install();
         FlatLaf.registerCustomDefaultsSource("tableview");
         UIManager.put("defaultFont", new Font(FlatRobotoFont.FAMILY, Font.PLAIN, 13));
         FlatMacDarkLaf.setup();
 
-        new Transacciones(idUsuario).setVisible(true);
+        new Transacciones().setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnTransacciones2ActionPerformed
+    }//GEN-LAST:event_btnTransacciones1ActionPerformed
 
     private void btnCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriasActionPerformed
-        new Categorias(idUsuario).setVisible(true);
+        new Categorias().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCategoriasActionPerformed
 
@@ -374,24 +364,9 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
     private void btnReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteActionPerformed
-        try {
-            String reportPath = getClass().getClassLoader().getResource("Reports/ReporteSemanal.jrxml").getPath();
-            JasperReport jasperReport = JasperCompileManager.compileReport(reportPath);
-            java.util.Map<String, Object> parameters = new java.util.HashMap<>();
-            parameters.put("idUsuario", this.idUsuario);
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, reg);
-            JasperViewer viewer = new JasperViewer(jasperPrint, false);
-            int x = this.getX();
-            int y = this.getY();
-            int width = this.getWidth();
-            int height = this.getHeight();
-            viewer.setBounds(x, y, width, height);
-            viewer.setZoomRatio(0.63f);
-            viewer.setVisible(true);
-        } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, "Error al generar el reporte: " + ex.getMessage());
-            ex.printStackTrace();
-        }
+        new Usuarios().setVisible(true);
+        this.dispose();
+
     }//GEN-LAST:event_btnReporteActionPerformed
 
     public static void main(String args[]) {
@@ -417,9 +392,6 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
             java.util.logging.Logger.getLogger(Cuentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
     }
 
@@ -438,22 +410,24 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
     private Items.MyButton btnEliminar;
     private Items.MyButton btnReporte;
     private Items.MyButton btnTransacciones;
-    private Items.MyButton btnTransacciones2;
+    private Items.MyButton btnTransacciones1;
     private javax.swing.JLabel lblBanco;
     private javax.swing.JLabel lblNombreCuenta;
     private javax.swing.JLabel lblSaldo;
     private javax.swing.JLabel lblSaldoTotal;
     private javax.swing.JLabel lblTipoCuenta;
-    private javax.swing.JLabel lblUltimos4;
+    private javax.swing.JLabel lblUltimos5;
+    private javax.swing.JLabel lblUsuarioPertenece;
     // End of variables declaration//GEN-END:variables
 
     private String numeroCuentaCompletoPanel0;
 
     void cargarCuentas() {
-        String sql = "SELECT idCuenta, Nombre, Tipo, Banco, NumeroCuenta, SUBSTR(NumeroCuenta, -4) AS ultimos4, Saldo FROM cuenta WHERE idUsuario = ?";
+        String sql = "SELECT c.idCuenta, c.Nombre AS NombreCuenta, c.Tipo, c.Banco, c.NumeroCuenta, SUBSTR(c.NumeroCuenta, -4) AS ultimos4, c.Saldo, u.Nombre AS NombreUsuario "
+                + "FROM cuenta c "
+                + "INNER JOIN usuarios u ON c.idUsuario = u.idUsuario";
 
         try (PreparedStatement pst = reg.prepareStatement(sql)) {
-            pst.setInt(1, idUsuario);
             ResultSet rs = pst.executeQuery();
 
             java.util.List<java.awt.Component> componentesToRemove = new java.util.ArrayList<>();
@@ -466,34 +440,20 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
                 PanelRoundFondo.remove(comp);
             }
             int y = 100;
-            if (rs.next()) {
-                Items.PanelRound primerPanelCuenta = crearPanelCuenta(
+            while (rs.next()) {
+                Items.PanelRound nuevoPanelCuenta = crearPanelCuenta(
                         rs.getInt("idCuenta"),
-                        rs.getString("Nombre"),
+                        rs.getString("NombreCuenta"),
                         rs.getString("Tipo"),
                         rs.getString("Banco"),
                         rs.getString("NumeroCuenta"),
                         rs.getString("ultimos4"),
                         rs.getDouble("Saldo"),
+                        rs.getString("NombreUsuario"),
                         y
                 );
-                PanelRoundFondo.add(primerPanelCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, y, 1130, 220));
+                PanelRoundFondo.add(nuevoPanelCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, y, 1130, 220));
                 y += 240;
-
-                while (rs.next()) {
-                    Items.PanelRound nuevoPanelCuenta = crearPanelCuenta(
-                            rs.getInt("idCuenta"),
-                            rs.getString("Nombre"),
-                            rs.getString("Tipo"),
-                            rs.getString("Banco"),
-                            rs.getString("NumeroCuenta"),
-                            rs.getString("ultimos4"),
-                            rs.getDouble("Saldo"),
-                            y
-                    );
-                    PanelRoundFondo.add(nuevoPanelCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, y, 1130, 220));
-                    y += 240;
-                }
             }
 
             PanelRoundFondo.repaint();
@@ -506,7 +466,7 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
         }
     }
 
-    private Items.PanelRound crearPanelCuenta(int idCuenta, String nombre, String tipo, String banco, String numeroCuentaCompleto, String ultimos4, double saldo, int y) {
+    private Items.PanelRound crearPanelCuenta(int idCuenta, String nombreCuenta, String tipo, String banco, String numeroCuentaCompleto, String ultimos4, double saldo, String nombreUsuario, int y) {
         Items.PanelRound panelCuenta = new Items.PanelRound();
         panelCuenta.setBackground(new java.awt.Color(245, 245, 245));
         panelCuenta.setRoundTopLeft(50);
@@ -515,7 +475,7 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
         panelCuenta.setRoundBottomRight(50);
         panelCuenta.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.JLabel lblNombre = new javax.swing.JLabel(nombre);
+        javax.swing.JLabel lblNombre = new javax.swing.JLabel(nombreCuenta);
         lblNombre.setForeground(new java.awt.Color(0, 0, 0));
         lblNombre.setFont(new java.awt.Font("Segoe UI", 0, 18));
         panelCuenta.add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 300, -1));
@@ -525,15 +485,20 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
         lblTipo.setFont(new java.awt.Font("Segoe UI", 0, 16));
         panelCuenta.add(lblTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 300, -1));
 
-        javax.swing.JLabel lblBanco = new javax.swing.JLabel(banco);
-        lblBanco.setForeground(new java.awt.Color(102, 102, 102));
-        lblBanco.setFont(new java.awt.Font("Segoe UI", 0, 16));
-        panelCuenta.add(lblBanco, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 300, -1));
+        javax.swing.JLabel lblBancoCuenta = new javax.swing.JLabel(banco);
+        lblBancoCuenta.setForeground(new java.awt.Color(102, 102, 102));
+        lblBancoCuenta.setFont(new java.awt.Font("Segoe UI", 0, 16));
+        panelCuenta.add(lblBancoCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 300, -1));
 
         javax.swing.JLabel lblUltimos = new javax.swing.JLabel("**** " + ultimos4);
         lblUltimos.setFont(new java.awt.Font("Segoe UI", 0, 16));
         lblUltimos.setForeground(new java.awt.Color(102, 102, 102));
         panelCuenta.add(lblUltimos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 300, -1));
+
+        javax.swing.JLabel lblUsuario = new javax.swing.JLabel("Pertenece a: " + nombreUsuario);
+        lblUsuario.setFont(new java.awt.Font("Segoe UI", 0, 16));
+        lblUsuario.setForeground(new java.awt.Color(102, 102, 102));
+        panelCuenta.add(lblUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 386, -1)); 
 
         javax.swing.JLabel lblSaldoNueva = new javax.swing.JLabel("Saldo");
         lblSaldoNueva.setFont(new java.awt.Font("Segoe UI", 0, 16));
@@ -557,8 +522,13 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
         panelCuenta.add(btnEditarNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 160, 120, 44));
         btnEditarNuevo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                EditarCuentaDialog editarDialog = new EditarCuentaDialog(Cuentas.this, Cuentas.this, idCuenta, nombre, tipo, banco, numeroCuentaCompleto, saldo);
-                editarDialog.setVisible(true);
+                int idUsuarioCuenta = obtenerIdUsuarioDeCuenta(idCuenta);
+                if (idUsuarioCuenta != -1) {
+                    EditarCuentaDialog editarDialog = new EditarCuentaDialog(Cuentas.this, Cuentas.this, idCuenta, nombreCuenta, tipo, banco, numeroCuentaCompleto, saldo, idUsuarioCuenta);
+                    editarDialog.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(Cuentas.this, "No se pudo obtener el ID del usuario de la cuenta.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 
@@ -573,7 +543,7 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
         panelCuenta.add(btnEliminarNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(979, 160, 120, 44));
         btnEliminarNuevo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String nombreCuentaAEliminar = nombre;
+                String nombreCuentaAEliminar = nombreCuenta;
                 int opcion = JOptionPane.showConfirmDialog(Cuentas.this, "¿Estás seguro de eliminar la cuenta '" + nombreCuentaAEliminar + "'?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
                 if (opcion == JOptionPane.YES_OPTION) {
                     eliminarCuenta(idCuenta);
@@ -596,13 +566,29 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
                 FlatLaf.registerCustomDefaultsSource("tableview");
                 UIManager.put("defaultFont", new Font(FlatRobotoFont.FAMILY, Font.PLAIN, 13));
                 FlatMacDarkLaf.setup();
-                Transacciones transaccionesForm = new Transacciones(idUsuario, nombre);
+                Transacciones transaccionesForm = new Transacciones(nombreCuenta);
                 transaccionesForm.setVisible(true);
                 dispose();
             }
         });
 
         return panelCuenta;
+    }
+
+    private int obtenerIdUsuarioDeCuenta(int idCuenta) {
+        int idUsuario = -1;
+        String sql = "SELECT idUsuario FROM cuenta WHERE idCuenta = ?";
+        try (PreparedStatement pst = reg.prepareStatement(sql)) {
+            pst.setInt(1, idCuenta);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                idUsuario = rs.getInt("idUsuario");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al obtener el ID del usuario de la cuenta: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error al obtener la información de la cuenta.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return idUsuario;
     }
 
     private void eliminarCuenta(int idCuentaAEliminar) {
@@ -615,11 +601,9 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
                 cargarCuentas();
             } else {
                 JOptionPane.showMessageDialog(this, "No se pudo eliminar la cuenta.", "Error", JOptionPane.ERROR_MESSAGE);
-
             }
         } catch (SQLException e) {
-            System.out.println("Error al eliminar cuenta: " + e.getMessage());
-            JOptionPane.showMessageDialog(this, "Error al eliminar la cuenta.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error al eliminar la cuenta: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -666,5 +650,4 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
     public void mouseReleased(MouseEvent e) {
         //  
     }
-
 }

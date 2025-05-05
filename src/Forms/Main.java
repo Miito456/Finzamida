@@ -8,9 +8,8 @@ import java.io.File;
 import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.Font;
+import FormsAdmin.*;
 
 public class Main extends javax.swing.JFrame {
 
@@ -184,7 +183,8 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
-
+        new DashboardAdmin().setVisible(true);
+        this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAdminActionPerformed
 

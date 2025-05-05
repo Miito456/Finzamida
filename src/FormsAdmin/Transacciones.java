@@ -1,5 +1,6 @@
-package Forms;
+package FormsAdmin;
 
+import Forms.*;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
@@ -29,23 +30,21 @@ import javax.swing.RowFilter;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.TableRowSorter;
-import net.sf.jasperreports.engine.*;
-import net.sf.jasperreports.view.*;
+import finzamida.UIUtils;
 
 public class Transacciones extends javax.swing.JFrame {
 
     Conexion conexion = new Conexion();
     Connection reg = conexion.getConexion();
-    private int idUsuario;
+    private String nombreUsuarioConsulta;
     private TableRowSorter<DefaultTableModel> sorter;
 
-    public Transacciones(int idUsuario) {
+    public Transacciones() {
         setUndecorated(true);
         initComponents();
         setLocationRelativeTo(null);
         applyTableStyle(jTable1);
-        this.idUsuario = idUsuario;
-        cargarDatosTabla(idUsuario);
+        cargarDatosTabla();
 
         sorter = new TableRowSorter<>((DefaultTableModel) jTable1.getModel());
         jTable1.setRowSorter(sorter);
@@ -76,18 +75,16 @@ public class Transacciones extends javax.swing.JFrame {
 
     }
 
-    public Transacciones(int idUsuario, String nombreCuenta) {
+    public Transacciones(String nombreUsuario) {
         setUndecorated(true);
         initComponents();
         setLocationRelativeTo(null);
         applyTableStyle(jTable1);
-        this.idUsuario = idUsuario;
-        cargarDatosTabla(idUsuario);
         sorter = new TableRowSorter<>((DefaultTableModel) jTable1.getModel());
         jTable1.setRowSorter(sorter);
-        txtSearch.setText(nombreCuenta);
-        filterTable();
-        setupSearchFilter();
+        txtSearch.setText(nombreUsuario); 
+        filterTable(); 
+        setupSearchFilter(); 
         applyCustomFont();
     }
 
@@ -197,14 +194,14 @@ public class Transacciones extends javax.swing.JFrame {
 
             },
             new String [] {
-                "", "Cuenta", "Cuenta", "Categoría", "Fecha", "Cantidad", "Tipo"
+                "", "Cuenta", "Cuenta", "Categoría", "Fecha", "Cantidad", "Usuario", "Descripcion", "idUsuario", "Tipo"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, false, false, false, false, false
+                true, false, false, false, false, false, false, false, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -299,7 +296,7 @@ public class Transacciones extends javax.swing.JFrame {
         MenuBotones.add(btnCerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 690, 189, 44));
 
         btnReporte.setForeground(new java.awt.Color(55, 0, 43));
-        btnReporte.setText("Reporte semanal");
+        btnReporte.setText("Usuarios");
         btnReporte.setBorderColor(new java.awt.Color(55, 36, 85));
         btnReporte.setColor(new java.awt.Color(226, 232, 247));
         btnReporte.setColorOver(new java.awt.Color(176, 179, 185));
@@ -333,11 +330,12 @@ public class Transacciones extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCerrarActionPerformed
 
     private void cmdAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdAddActionPerformed
-        NuevoTransaccionDialog nuevoDialog = new NuevoTransaccionDialog(this, idUsuario, this);
+        NuevoTransaccionDialogAdmin nuevoDialog = new NuevoTransaccionDialogAdmin(this, this);
         nuevoDialog.setVisible(true);
     }//GEN-LAST:event_cmdAddActionPerformed
 
     private void cmdUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdUpdateActionPerformed
+
         int selectedCount = 0;
         int rowToUpdate = -1;
 
@@ -382,17 +380,19 @@ public class Transacciones extends javax.swing.JFrame {
             Connection con = conexion.getConexion();
             PreparedStatement pstmt = null;
             ResultSet rs = null;
+            int idUsuarioOriginal = -1;
 
             try {
-                String sql = "SELECT Descripcion FROM transacciones WHERE idTransacciones = ?";
+                String sql = "SELECT Descripcion, t.idUsuario FROM transacciones t WHERE idTransacciones = ?";
                 pstmt = con.prepareStatement(sql);
                 pstmt.setInt(1, idTransaccion);
                 rs = pstmt.executeQuery();
                 if (rs.next()) {
                     concepto = rs.getString("Descripcion");
+                    idUsuarioOriginal = rs.getInt("idUsuario");
                 }
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(this, "Error al obtener el concepto: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Error al obtener el concepto y el ID del usuario: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             } finally {
                 try {
@@ -410,7 +410,6 @@ public class Transacciones extends javax.swing.JFrame {
 
             ActualizarTransaccionDialog updateDialog = new ActualizarTransaccionDialog(
                     this,
-                    idUsuario,
                     this,
                     idTransaccion,
                     nombreCuenta,
@@ -418,7 +417,8 @@ public class Transacciones extends javax.swing.JFrame {
                     fecha,
                     monto,
                     tipo,
-                    concepto
+                    concepto,
+                    idUsuarioOriginal 
             );
             updateDialog.setVisible(true);
         }
@@ -462,15 +462,20 @@ public class Transacciones extends javax.swing.JFrame {
 
     }//GEN-LAST:event_cmdDeleteActionPerformed
 
-    private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashboardActionPerformed
-        new Dashboard(idUsuario).setVisible(true);
+    private void btnReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteActionPerformed
+        new Usuarios().setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnDashboardActionPerformed
+    }//GEN-LAST:event_btnReporteActionPerformed
 
-    private void btnCuentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCuentasActionPerformed
-        new Cuentas(idUsuario).setVisible(true);
+    private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
+        new Main().setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnCuentasActionPerformed
+    }//GEN-LAST:event_btnCerrarSesionActionPerformed
+
+    private void btnCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriasActionPerformed
+        new Categorias().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCategoriasActionPerformed
 
     private void btnTransaccionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransaccionesActionPerformed
         FlatRobotoFont.install();
@@ -478,40 +483,19 @@ public class Transacciones extends javax.swing.JFrame {
         UIManager.put("defaultFont", new Font(FlatRobotoFont.FAMILY, Font.PLAIN, 13));
         FlatMacDarkLaf.setup();
 
-        new Transacciones(idUsuario).setVisible(true);
+        new Transacciones().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnTransaccionesActionPerformed
 
-    private void btnCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriasActionPerformed
-        new Categorias(idUsuario).setVisible(true);
+    private void btnCuentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCuentasActionPerformed
+        new Cuentas().setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnCategoriasActionPerformed
+    }//GEN-LAST:event_btnCuentasActionPerformed
 
-    private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
-        new Main().setVisible(true);
+    private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashboardActionPerformed
+        new DashboardAdmin().setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnCerrarSesionActionPerformed
-
-    private void btnReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteActionPerformed
-        try {
-            String reportPath = getClass().getClassLoader().getResource("Reports/ReporteSemanal.jrxml").getPath();
-            JasperReport jasperReport = JasperCompileManager.compileReport(reportPath);
-            java.util.Map<String, Object> parameters = new java.util.HashMap<>();
-            parameters.put("idUsuario", this.idUsuario);
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, reg);
-            JasperViewer viewer = new JasperViewer(jasperPrint, false);
-            int x = this.getX();
-            int y = this.getY();
-            int width = this.getWidth();
-            int height = this.getHeight();
-            viewer.setBounds(x, y, width, height);
-            viewer.setZoomRatio(0.63f);
-            viewer.setVisible(true);
-        } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, "Error al generar el reporte: " + ex.getMessage());
-            ex.printStackTrace();
-        }
-    }//GEN-LAST:event_btnReporteActionPerformed
+    }//GEN-LAST:event_btnDashboardActionPerformed
 
     public static void main(String args[]) {
         FlatRobotoFont.install();
@@ -541,7 +525,7 @@ public class Transacciones extends javax.swing.JFrame {
     private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 
-    void cargarDatosTabla(int idUsuario) {
+    void cargarDatosTabla() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
 
@@ -555,18 +539,19 @@ public class Transacciones extends javax.swing.JFrame {
                     + "    t.idTransacciones, "
                     + "    t.Fecha, "
                     + "    t.Monto, "
-                    + "    t.Tipo, "
+                    + "    u.Nombre AS NombreUsuario, "
                     + "    c.Nombre AS NombreCategoria, "
                     + "    cu.Nombre AS NombreCuenta, "
                     + "    SUBSTRING(cu.NumeroCuenta, -4) AS Ultimos4Digitos, "
-                    + "    t.Descripcion "
+                    + "    t.Descripcion, "
+                    + "    t.idUsuario, "
+                    + "    t.Tipo "
                     + "FROM transacciones t "
                     + "JOIN categorias c ON t.idCategoria = c.idCategoria "
                     + "JOIN cuenta cu ON t.idCuenta = cu.idCuenta "
-                    + "WHERE t.idUsuario = ? "
-                    + "ORDER BY t.Fecha DESC"; 
+                    + "JOIN usuarios u ON cu.idUsuario = u.idUsuario "
+                    + "ORDER BY t.Fecha DESC";
             pstmt = con.prepareStatement(sql);
-            pstmt.setInt(1, idUsuario);
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
@@ -574,13 +559,15 @@ public class Transacciones extends javax.swing.JFrame {
                 java.sql.Date fechaSQL = rs.getDate("Fecha");
                 String fecha = (fechaSQL != null) ? fechaSQL.toString() : "";
                 double monto = rs.getDouble("Monto");
-                String tipo = rs.getString("Tipo");
+                String nombreUsuario = rs.getString("NombreUsuario");
                 String nombreCategoria = rs.getString("NombreCategoria");
                 String nombreCuenta = rs.getString("NombreCuenta");
                 String ultimos4Digitos = rs.getString("Ultimos4Digitos");
                 String descripcion = rs.getString("Descripcion");
+                int idUsuarioTabla = rs.getInt("idUsuario");
+                String tipoTransaccion = rs.getString("Tipo"); // Obtenemos el tipo de transacción
 
-                model.addRow(new Object[]{false, idTransacciones, nombreCuenta + " (..." + ultimos4Digitos + ")", nombreCategoria, fecha, monto, tipo, descripcion});
+                model.addRow(new Object[]{false, idTransacciones, nombreCuenta + " (..." + ultimos4Digitos + ")", nombreCategoria, fecha, monto, nombreUsuario, descripcion, idUsuarioTabla, tipoTransaccion}); // Añadimos el tipo
             }
 
             if (jTable1.getColumnCount() > 1) {
@@ -593,11 +580,31 @@ public class Transacciones extends javax.swing.JFrame {
                 jTable1.getColumnModel().getColumn(7).setMaxWidth(0);
                 jTable1.getColumnModel().getColumn(7).setPreferredWidth(0);
             }
+            if (jTable1.getColumnCount() > 8) {
+                jTable1.getColumnModel().getColumn(8).setMinWidth(0);
+                jTable1.getColumnModel().getColumn(8).setMaxWidth(0);
+                jTable1.getColumnModel().getColumn(8).setPreferredWidth(0);
+            }
+            if (jTable1.getColumnCount() > 9) {
+                jTable1.getColumnModel().getColumn(9).setMinWidth(0);
+                jTable1.getColumnModel().getColumn(9).setMaxWidth(0);
+                jTable1.getColumnModel().getColumn(9).setPreferredWidth(0);
+            }
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "Error al cargar los datos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } finally {
-
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                conexion.desconectar();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -635,8 +642,8 @@ public class Transacciones extends javax.swing.JFrame {
                         label.setHorizontalAlignment(SwingConstants.LEADING);
                     }
                     if (header == false) {
-                        if (column == 5) {
-                            String tipo = table.getValueAt(row, 6).toString();
+                        if (column == 5) { 
+                            String tipo = table.getValueAt(row, 9).toString();
                             double monto = Double.parseDouble(value.toString());
                             DecimalFormat formato = new DecimalFormat("#,##0.00");
 
@@ -678,7 +685,7 @@ public class Transacciones extends javax.swing.JFrame {
             int filasAfectadas = pstmt.executeUpdate();
             if (filasAfectadas > 0) {
                 JOptionPane.showMessageDialog(this, "Transacción eliminada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                cargarDatosTabla(idUsuario);
+                cargarDatosTabla();
             } else {
                 JOptionPane.showMessageDialog(this, "Error al eliminar la transacción.", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -733,5 +740,4 @@ public class Transacciones extends javax.swing.JFrame {
             sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
         }
     }
-
 }

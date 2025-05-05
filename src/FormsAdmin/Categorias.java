@@ -1,5 +1,6 @@
-package Forms;
+package FormsAdmin;
 
+import Forms.*;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
@@ -16,14 +17,14 @@ import javax.swing.UIManager;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.view.*;
 
-public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseMotionListener {
+public class Categorias extends javax.swing.JFrame implements MouseListener, MouseMotionListener {
 
     Conexion conexion = new Conexion();
     Connection reg = conexion.getConexion();
-    private int idUsuario;
+    private int idCategoriaPanel0 = -1;
     private int mouseY;
 
-    public Cuentas(int idUsuario) {
+    public Categorias() {
         setUndecorated(true);
         initComponents();
         setLocationRelativeTo(null);
@@ -36,8 +37,7 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
         }
         PanelRoundFondo.addMouseListener(this);
         PanelRoundFondo.addMouseMotionListener(this);
-        this.idUsuario = idUsuario;
-        cargarCuentas();
+        cargarCategorias();
     }
 
     @SuppressWarnings("unchecked")
@@ -46,22 +46,18 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
 
         PanelRoundFondo = new Items.PanelRound();
         btnCerrar = new javax.swing.JButton();
-        PanelCuenta0 = new Items.PanelRound();
-        lblNombreCuenta = new javax.swing.JLabel();
-        lblTipoCuenta = new javax.swing.JLabel();
-        lblSaldoTotal = new javax.swing.JLabel();
-        lblBanco = new javax.swing.JLabel();
-        lblUltimos4 = new javax.swing.JLabel();
-        lblSaldo = new javax.swing.JLabel();
+        PanelCategoria0 = new Items.PanelRound();
+        lblNombreCategoria = new javax.swing.JLabel();
         btnEditar = new Items.MyButton();
         btnEliminar = new Items.MyButton();
         btnTransacciones = new Items.MyButton();
+        lblUsuarioPertenece = new javax.swing.JLabel();
         btnAgregarCuenta = new Items.MyButton();
         MenuBotones = new Items.PanelRound();
         Logo = new UIUtils.LogoPanel();
         btnDashboard = new Items.MyButton();
         btnCuentas = new Items.MyButton();
-        btnTransacciones2 = new Items.MyButton();
+        btnTransacciones1 = new Items.MyButton();
         btnCategorias = new Items.MyButton();
         btnCerrarSesion = new Items.MyButton();
         btnReporte = new Items.MyButton();
@@ -85,43 +81,17 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
         });
         PanelRoundFondo.add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1370, 20, -1, -1));
 
-        PanelCuenta0.setBackground(new java.awt.Color(245, 245, 245));
-        PanelCuenta0.setRoundBottomLeft(50);
-        PanelCuenta0.setRoundBottomRight(50);
-        PanelCuenta0.setRoundTopLeft(50);
-        PanelCuenta0.setRoundTopRight(50);
-        PanelCuenta0.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        PanelCategoria0.setBackground(new java.awt.Color(245, 245, 245));
+        PanelCategoria0.setRoundBottomLeft(50);
+        PanelCategoria0.setRoundBottomRight(50);
+        PanelCategoria0.setRoundTopLeft(50);
+        PanelCategoria0.setRoundTopRight(50);
+        PanelCategoria0.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblNombreCuenta.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lblNombreCuenta.setForeground(new java.awt.Color(0, 0, 0));
-        lblNombreCuenta.setText("[Nombre de cuenta]");
-        PanelCuenta0.add(lblNombreCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 362, -1));
-
-        lblTipoCuenta.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        lblTipoCuenta.setForeground(new java.awt.Color(102, 102, 102));
-        lblTipoCuenta.setText("Tipo de cuenta");
-        PanelCuenta0.add(lblTipoCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 51, 386, -1));
-
-        lblSaldoTotal.setFont(new java.awt.Font("Segoe UI", 0, 46)); // NOI18N
-        lblSaldoTotal.setForeground(new java.awt.Color(70, 155, 74));
-        lblSaldoTotal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblSaldoTotal.setText("000000.00 MXN");
-        PanelCuenta0.add(lblSaldoTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 60, 350, 74));
-
-        lblBanco.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        lblBanco.setForeground(new java.awt.Color(102, 102, 102));
-        lblBanco.setText("[Banco]");
-        PanelCuenta0.add(lblBanco, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 79, 386, -1));
-
-        lblUltimos4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        lblUltimos4.setForeground(new java.awt.Color(102, 102, 102));
-        lblUltimos4.setText("[Ultimos 4 digitos de la tarjeta]");
-        PanelCuenta0.add(lblUltimos4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 107, 386, -1));
-
-        lblSaldo.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        lblSaldo.setForeground(new java.awt.Color(102, 102, 102));
-        lblSaldo.setText("Saldo");
-        PanelCuenta0.add(lblSaldo, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 30, 50, -1));
+        lblNombreCategoria.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lblNombreCategoria.setForeground(new java.awt.Color(0, 0, 0));
+        lblNombreCategoria.setText("[Nombre de la categoría]");
+        PanelCategoria0.add(lblNombreCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 370, 40));
 
         btnEditar.setForeground(new java.awt.Color(55, 0, 43));
         btnEditar.setText("Editar");
@@ -135,7 +105,7 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
                 btnEditarActionPerformed(evt);
             }
         });
-        PanelCuenta0.add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 160, 120, 44));
+        PanelCategoria0.add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 30, 120, 44));
 
         btnEliminar.setForeground(new java.awt.Color(55, 0, 43));
         btnEliminar.setText("Eliminar");
@@ -149,7 +119,7 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
                 btnEliminarActionPerformed(evt);
             }
         });
-        PanelCuenta0.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(979, 160, 120, 44));
+        PanelCategoria0.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 30, 120, 44));
 
         btnTransacciones.setForeground(new java.awt.Color(55, 0, 43));
         btnTransacciones.setText("Ver transacciones");
@@ -163,12 +133,17 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
                 btnTransaccionesActionPerformed(evt);
             }
         });
-        PanelCuenta0.add(btnTransacciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 160, 180, 44));
+        PanelCategoria0.add(btnTransacciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 30, 180, 44));
 
-        PanelRoundFondo.add(PanelCuenta0, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 100, 1130, 220));
+        lblUsuarioPertenece.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        lblUsuarioPertenece.setForeground(new java.awt.Color(102, 102, 102));
+        lblUsuarioPertenece.setText("[Usuario al que le pertenece la cuenta]");
+        PanelCategoria0.add(lblUsuarioPertenece, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 350, 30));
+
+        PanelRoundFondo.add(PanelCategoria0, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 100, 1130, 100));
 
         btnAgregarCuenta.setForeground(new java.awt.Color(55, 0, 43));
-        btnAgregarCuenta.setText("Agregar cuenta");
+        btnAgregarCuenta.setText("Agregar categoría");
         btnAgregarCuenta.setBorderColor(new java.awt.Color(226, 232, 247));
         btnAgregarCuenta.setColor(new java.awt.Color(226, 232, 247));
         btnAgregarCuenta.setColorOver(new java.awt.Color(176, 179, 185));
@@ -215,19 +190,19 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
         });
         MenuBotones.add(btnCuentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 189, 44));
 
-        btnTransacciones2.setForeground(new java.awt.Color(55, 0, 43));
-        btnTransacciones2.setText("Transacciones");
-        btnTransacciones2.setBorderColor(new java.awt.Color(55, 36, 85));
-        btnTransacciones2.setColor(new java.awt.Color(226, 232, 247));
-        btnTransacciones2.setColorOver(new java.awt.Color(176, 179, 185));
-        btnTransacciones2.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
-        btnTransacciones2.setRadius(40);
-        btnTransacciones2.addActionListener(new java.awt.event.ActionListener() {
+        btnTransacciones1.setForeground(new java.awt.Color(55, 0, 43));
+        btnTransacciones1.setText("Transacciones");
+        btnTransacciones1.setBorderColor(new java.awt.Color(55, 36, 85));
+        btnTransacciones1.setColor(new java.awt.Color(226, 232, 247));
+        btnTransacciones1.setColorOver(new java.awt.Color(176, 179, 185));
+        btnTransacciones1.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        btnTransacciones1.setRadius(40);
+        btnTransacciones1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTransacciones2ActionPerformed(evt);
+                btnTransacciones1ActionPerformed(evt);
             }
         });
-        MenuBotones.add(btnTransacciones2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 189, 44));
+        MenuBotones.add(btnTransacciones1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 189, 44));
 
         btnCategorias.setForeground(new java.awt.Color(55, 0, 43));
         btnCategorias.setText("Categorías");
@@ -258,7 +233,7 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
         MenuBotones.add(btnCerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 690, 189, 44));
 
         btnReporte.setForeground(new java.awt.Color(55, 0, 43));
-        btnReporte.setText("Reporte semanal");
+        btnReporte.setText("Usuarios");
         btnReporte.setBorderColor(new java.awt.Color(55, 36, 85));
         btnReporte.setColor(new java.awt.Color(226, 232, 247));
         btnReporte.setColorOver(new java.awt.Color(176, 179, 185));
@@ -291,80 +266,74 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
         System.exit(0);
     }//GEN-LAST:event_btnCerrarActionPerformed
 
-    private int idCuentaPanel0;
 
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        String nombre = lblNombreCuenta.getText();
-        String tipo = lblTipoCuenta.getText();
-        String banco = lblBanco.getText();
-        String saldoStr = lblSaldoTotal.getText().replace(" MXN", "").trim();
-        double saldo = 0.0;
-        try {
-            saldo = Double.parseDouble(saldoStr);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Error al leer el saldo.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        if (idCuentaPanel0 != -1) {
-            EditarCuentaDialog editarDialog = new EditarCuentaDialog(this, this, idCuentaPanel0, nombre, tipo, banco, numeroCuentaCompletoPanel0, saldo);
-            editarDialog.setVisible(true);
-        } else {
-            JOptionPane.showMessageDialog(this, "No se pudo obtener el ID de la cuenta para editar.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_btnEditarActionPerformed
-
-
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        String nombre = lblNombreCuenta.getText();
-        int opcion = JOptionPane.showConfirmDialog(Cuentas.this, "¿Estás seguro de eliminar la cuenta '" + nombre + "'?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-        if (opcion == JOptionPane.YES_OPTION) {
-            if (idCuentaPanel0 != -1) {
-                eliminarCuenta(idCuentaPanel0);
-            } else {
-                JOptionPane.showMessageDialog(Cuentas.this, "No se pudo obtener el ID de la cuenta para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    }//GEN-LAST:event_btnEliminarActionPerformed
+    private void btnAgregarCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCuentaActionPerformed
+        AgregarCategoriaDialog agregarDialog = new AgregarCategoriaDialog(this, this);
+        agregarDialog.setVisible(true);
+    }//GEN-LAST:event_btnAgregarCuentaActionPerformed
 
     private void btnTransaccionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransaccionesActionPerformed
         FlatRobotoFont.install();
         FlatLaf.registerCustomDefaultsSource("tableview");
         UIManager.put("defaultFont", new Font(FlatRobotoFont.FAMILY, Font.PLAIN, 13));
         FlatMacDarkLaf.setup();
-        String nombreCuenta = lblNombreCuenta.getText();
-        Transacciones transaccionesForm = new Transacciones(idUsuario, nombreCuenta);
-        transaccionesForm.setVisible(true);
-        dispose();
+
+        new Transacciones().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnTransaccionesActionPerformed
 
-    private void btnAgregarCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCuentaActionPerformed
-        AgregarCuentaDialog agregarDialog = new AgregarCuentaDialog(this, true, this, idUsuario);
-        agregarDialog.setVisible(true);
-    }//GEN-LAST:event_btnAgregarCuentaActionPerformed
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        String nombre = lblNombreCategoria.getText();
+        int opcion = JOptionPane.showConfirmDialog(Categorias.this, "¿Estás seguro de eliminar la categoría '" + nombre + "'?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+        if (opcion == JOptionPane.YES_OPTION) {
+            if (idCategoriaPanel0 != -1) {
+                eliminarCategoria(idCategoriaPanel0);
+            } else {
+                JOptionPane.showMessageDialog(Categorias.this, "No se pudo obtener el ID de la categoría para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        String nombre = lblNombreCategoria.getText();
+        String sql = "SELECT idUsuario FROM categorias WHERE idCategoria = ?";
+        try (PreparedStatement pst = reg.prepareStatement(sql)) {
+            pst.setInt(1, idCategoriaPanel0);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                int idUsuarioPanel0 = rs.getInt("idUsuario");
+                EditarCategoriaDialog editarDialog = new EditarCategoriaDialog(this, this, idCategoriaPanel0, nombre, idUsuarioPanel0);
+                editarDialog.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "No se pudo obtener el ID del usuario de la categoría.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error al obtener el ID del usuario: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashboardActionPerformed
-        new Dashboard(idUsuario).setVisible(true);
+        new DashboardAdmin().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnDashboardActionPerformed
 
     private void btnCuentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCuentasActionPerformed
-        new Cuentas(idUsuario).setVisible(true);
+        new Cuentas().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCuentasActionPerformed
 
-    private void btnTransacciones2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransacciones2ActionPerformed
+    private void btnTransacciones1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransacciones1ActionPerformed
         FlatRobotoFont.install();
         FlatLaf.registerCustomDefaultsSource("tableview");
         UIManager.put("defaultFont", new Font(FlatRobotoFont.FAMILY, Font.PLAIN, 13));
         FlatMacDarkLaf.setup();
 
-        new Transacciones(idUsuario).setVisible(true);
+        new Transacciones().setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnTransacciones2ActionPerformed
+    }//GEN-LAST:event_btnTransacciones1ActionPerformed
 
     private void btnCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriasActionPerformed
-        new Categorias(idUsuario).setVisible(true);
+        new Categorias().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCategoriasActionPerformed
 
@@ -374,24 +343,10 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
     private void btnReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteActionPerformed
-        try {
-            String reportPath = getClass().getClassLoader().getResource("Reports/ReporteSemanal.jrxml").getPath();
-            JasperReport jasperReport = JasperCompileManager.compileReport(reportPath);
-            java.util.Map<String, Object> parameters = new java.util.HashMap<>();
-            parameters.put("idUsuario", this.idUsuario);
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, reg);
-            JasperViewer viewer = new JasperViewer(jasperPrint, false);
-            int x = this.getX();
-            int y = this.getY();
-            int width = this.getWidth();
-            int height = this.getHeight();
-            viewer.setBounds(x, y, width, height);
-            viewer.setZoomRatio(0.63f);
-            viewer.setVisible(true);
-        } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, "Error al generar el reporte: " + ex.getMessage());
-            ex.printStackTrace();
-        }
+
+        new Usuarios().setVisible(true);
+        this.dispose();
+
     }//GEN-LAST:event_btnReporteActionPerformed
 
     public static void main(String args[]) {
@@ -408,16 +363,14 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Cuentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Categorias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Cuentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Categorias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Cuentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Categorias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Cuentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Categorias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
@@ -426,7 +379,7 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Logo;
     private Items.PanelRound MenuBotones;
-    private Items.PanelRound PanelCuenta0;
+    private Items.PanelRound PanelCategoria0;
     private Items.PanelRound PanelRoundFondo;
     private Items.MyButton btnAgregarCuenta;
     private Items.MyButton btnCategorias;
@@ -438,22 +391,17 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
     private Items.MyButton btnEliminar;
     private Items.MyButton btnReporte;
     private Items.MyButton btnTransacciones;
-    private Items.MyButton btnTransacciones2;
-    private javax.swing.JLabel lblBanco;
-    private javax.swing.JLabel lblNombreCuenta;
-    private javax.swing.JLabel lblSaldo;
-    private javax.swing.JLabel lblSaldoTotal;
-    private javax.swing.JLabel lblTipoCuenta;
-    private javax.swing.JLabel lblUltimos4;
+    private Items.MyButton btnTransacciones1;
+    private javax.swing.JLabel lblNombreCategoria;
+    private javax.swing.JLabel lblUsuarioPertenece;
     // End of variables declaration//GEN-END:variables
 
-    private String numeroCuentaCompletoPanel0;
-
-    void cargarCuentas() {
-        String sql = "SELECT idCuenta, Nombre, Tipo, Banco, NumeroCuenta, SUBSTR(NumeroCuenta, -4) AS ultimos4, Saldo FROM cuenta WHERE idUsuario = ?";
+    void cargarCategorias() {
+        String sql = "SELECT c.idCategoria, c.Nombre AS NombreCategoria, u.Nombre AS NombreUsuario, c.idUsuario " 
+                + "FROM categorias c "
+                + "INNER JOIN usuarios u ON c.idUsuario = u.idUsuario";
 
         try (PreparedStatement pst = reg.prepareStatement(sql)) {
-            pst.setInt(1, idUsuario);
             ResultSet rs = pst.executeQuery();
 
             java.util.List<java.awt.Component> componentesToRemove = new java.util.ArrayList<>();
@@ -465,35 +413,36 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
             for (java.awt.Component comp : componentesToRemove) {
                 PanelRoundFondo.remove(comp);
             }
+
             int y = 100;
+
             if (rs.next()) {
-                Items.PanelRound primerPanelCuenta = crearPanelCuenta(
-                        rs.getInt("idCuenta"),
-                        rs.getString("Nombre"),
-                        rs.getString("Tipo"),
-                        rs.getString("Banco"),
-                        rs.getString("NumeroCuenta"),
-                        rs.getString("ultimos4"),
-                        rs.getDouble("Saldo"),
-                        y
-                );
-                PanelRoundFondo.add(primerPanelCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, y, 1130, 220));
-                y += 240;
+                int idCat = rs.getInt("idCategoria");
+                String nombreCat = rs.getString("NombreCategoria");
+                String nombreUsu = rs.getString("NombreUsuario");
+                int idUsu = rs.getInt("idUsuario");
+                Items.PanelRound primerPanelCategoria = crearPanelCategoria(idCat, nombreCat, nombreUsu, idUsu, y); 
+                PanelRoundFondo.add(primerPanelCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, y, 1130, 100));
+                if (y == 100) {
+                    idCategoriaPanel0 = idCat;
+                    lblNombreCategoria.setText(nombreCat);
+                    lblUsuarioPertenece.setText("Pertenece a: " + nombreUsu);
+                }
+                y += 150;
 
                 while (rs.next()) {
-                    Items.PanelRound nuevoPanelCuenta = crearPanelCuenta(
-                            rs.getInt("idCuenta"),
-                            rs.getString("Nombre"),
-                            rs.getString("Tipo"),
-                            rs.getString("Banco"),
-                            rs.getString("NumeroCuenta"),
-                            rs.getString("ultimos4"),
-                            rs.getDouble("Saldo"),
-                            y
-                    );
-                    PanelRoundFondo.add(nuevoPanelCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, y, 1130, 220));
-                    y += 240;
+                    int idCatNuevo = rs.getInt("idCategoria");
+                    String nombreCatNuevo = rs.getString("NombreCategoria");
+                    String nombreUsuNuevo = rs.getString("NombreUsuario");
+                    int idUsuNuevo = rs.getInt("idUsuario");
+                    Items.PanelRound nuevoPanelCategoria = crearPanelCategoria(idCatNuevo, nombreCatNuevo, nombreUsuNuevo, idUsuNuevo, y); // Pasar idUsuario
+                    PanelRoundFondo.add(nuevoPanelCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, y, 1130, 100));
+                    y += 150;
                 }
+            } else {
+                lblNombreCategoria.setText("No hay categorías");
+                lblUsuarioPertenece.setText("");
+                idCategoriaPanel0 = -1;
             }
 
             PanelRoundFondo.repaint();
@@ -502,49 +451,28 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
             UIUtils.setFontRecursively(PanelRoundFondo, customFont);
 
         } catch (SQLException e) {
-            System.out.println("Error al cargar cuentas: " + e.getMessage());
+            System.out.println("Error al cargar categorías: " + e.getMessage());
         }
     }
 
-    private Items.PanelRound crearPanelCuenta(int idCuenta, String nombre, String tipo, String banco, String numeroCuentaCompleto, String ultimos4, double saldo, int y) {
-        Items.PanelRound panelCuenta = new Items.PanelRound();
-        panelCuenta.setBackground(new java.awt.Color(245, 245, 245));
-        panelCuenta.setRoundTopLeft(50);
-        panelCuenta.setRoundTopRight(50);
-        panelCuenta.setRoundBottomLeft(50);
-        panelCuenta.setRoundBottomRight(50);
-        panelCuenta.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+    private Items.PanelRound crearPanelCategoria(int idCategoria, String nombreCategoria, String nombreUsuario, int idUsuarioCategoria, int y) {
+        Items.PanelRound panelCategoria = new Items.PanelRound();
+        panelCategoria.setBackground(new java.awt.Color(245, 245, 245));
+        panelCategoria.setRoundTopLeft(50);
+        panelCategoria.setRoundTopRight(50);
+        panelCategoria.setRoundBottomLeft(50);
+        panelCategoria.setRoundBottomRight(50);
+        panelCategoria.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.JLabel lblNombre = new javax.swing.JLabel(nombre);
+        javax.swing.JLabel lblNombre = new javax.swing.JLabel(nombreCategoria);
+        lblNombre.setFont(new java.awt.Font("Segoe UI", 0, 24));
         lblNombre.setForeground(new java.awt.Color(0, 0, 0));
-        lblNombre.setFont(new java.awt.Font("Segoe UI", 0, 18));
-        panelCuenta.add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 300, -1));
+        panelCategoria.add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 550, 40));
 
-        javax.swing.JLabel lblTipo = new javax.swing.JLabel(tipo);
-        lblTipo.setForeground(new java.awt.Color(102, 102, 102));
-        lblTipo.setFont(new java.awt.Font("Segoe UI", 0, 16));
-        panelCuenta.add(lblTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 300, -1));
-
-        javax.swing.JLabel lblBanco = new javax.swing.JLabel(banco);
-        lblBanco.setForeground(new java.awt.Color(102, 102, 102));
-        lblBanco.setFont(new java.awt.Font("Segoe UI", 0, 16));
-        panelCuenta.add(lblBanco, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 300, -1));
-
-        javax.swing.JLabel lblUltimos = new javax.swing.JLabel("**** " + ultimos4);
-        lblUltimos.setFont(new java.awt.Font("Segoe UI", 0, 16));
-        lblUltimos.setForeground(new java.awt.Color(102, 102, 102));
-        panelCuenta.add(lblUltimos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 300, -1));
-
-        javax.swing.JLabel lblSaldoNueva = new javax.swing.JLabel("Saldo");
-        lblSaldoNueva.setFont(new java.awt.Font("Segoe UI", 0, 16));
-        lblSaldoNueva.setForeground(new java.awt.Color(102, 102, 102));
-        panelCuenta.add(lblSaldoNueva, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 30, 50, -1));
-
-        javax.swing.JLabel lblSaldoCuenta = new javax.swing.JLabel(saldo + " MXN");
-        lblSaldoCuenta.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblSaldoCuenta.setFont(new java.awt.Font("Segoe UI", 0, 46));
-        lblSaldoCuenta.setForeground(new java.awt.Color(70, 155, 74));
-        panelCuenta.add(lblSaldoCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 60, 350, -1));
+        javax.swing.JLabel lblUsuario = new javax.swing.JLabel("Pertenece a: " + nombreUsuario);
+        lblUsuario.setFont(new java.awt.Font("Segoe UI", 0, 16));
+        lblUsuario.setForeground(new java.awt.Color(102, 102, 102));
+        panelCategoria.add(lblUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 350, 30));
 
         Items.MyButton btnEditarNuevo = new Items.MyButton();
         btnEditarNuevo.setText("Editar");
@@ -554,10 +482,10 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
         btnEditarNuevo.setFont(new java.awt.Font("Segoe UI", 0, 15));
         btnEditarNuevo.setRadius(40);
         btnEditarNuevo.setForeground(new java.awt.Color(55, 0, 43));
-        panelCuenta.add(btnEditarNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 160, 120, 44));
+        panelCategoria.add(btnEditarNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 30, 120, 44));
         btnEditarNuevo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                EditarCuentaDialog editarDialog = new EditarCuentaDialog(Cuentas.this, Cuentas.this, idCuenta, nombre, tipo, banco, numeroCuentaCompleto, saldo);
+                EditarCategoriaDialog editarDialog = new EditarCategoriaDialog(Categorias.this, Categorias.this, idCategoria, nombreCategoria, idUsuarioCategoria);
                 editarDialog.setVisible(true);
             }
         });
@@ -570,13 +498,13 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
         btnEliminarNuevo.setFont(new java.awt.Font("Segoe UI", 0, 15));
         btnEliminarNuevo.setRadius(40);
         btnEliminarNuevo.setForeground(new java.awt.Color(55, 0, 43));
-        panelCuenta.add(btnEliminarNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(979, 160, 120, 44));
+        panelCategoria.add(btnEliminarNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 30, 120, 44));
         btnEliminarNuevo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String nombreCuentaAEliminar = nombre;
-                int opcion = JOptionPane.showConfirmDialog(Cuentas.this, "¿Estás seguro de eliminar la cuenta '" + nombreCuentaAEliminar + "'?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+                String nombreCategoriaAEliminar = nombreCategoria;
+                int opcion = JOptionPane.showConfirmDialog(Categorias.this, "¿Estás seguro de eliminar la categoría '" + nombreCategoriaAEliminar + "'?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
                 if (opcion == JOptionPane.YES_OPTION) {
-                    eliminarCuenta(idCuenta);
+                    eliminarCategoria(idCategoria);
                 }
             }
         });
@@ -589,37 +517,37 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
         btnTransaccionesNuevo.setFont(new java.awt.Font("Segoe UI", 0, 15));
         btnTransaccionesNuevo.setRadius(40);
         btnTransaccionesNuevo.setForeground(new java.awt.Color(55, 0, 43));
-        panelCuenta.add(btnTransaccionesNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 160, 180, 44));
+        panelCategoria.add(btnTransaccionesNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 30, 180, 44));
         btnTransaccionesNuevo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 FlatRobotoFont.install();
                 FlatLaf.registerCustomDefaultsSource("tableview");
                 UIManager.put("defaultFont", new Font(FlatRobotoFont.FAMILY, Font.PLAIN, 13));
                 FlatMacDarkLaf.setup();
-                Transacciones transaccionesForm = new Transacciones(idUsuario, nombre);
+                Transacciones transaccionesForm = new Transacciones(nombreCategoria);
                 transaccionesForm.setVisible(true);
                 dispose();
             }
         });
 
-        return panelCuenta;
+        return panelCategoria;
     }
 
-    private void eliminarCuenta(int idCuentaAEliminar) {
-        String sql = "DELETE FROM cuenta WHERE idCuenta = ?";
+    private void eliminarCategoria(int idCategoriaAEliminar) {
+        String sql = "DELETE FROM `categorias` WHERE `idCategoria` = ?";
         try (PreparedStatement pst = reg.prepareStatement(sql)) {
-            pst.setInt(1, idCuentaAEliminar);
+            pst.setInt(1, idCategoriaAEliminar);
             int filasAfectadas = pst.executeUpdate();
             if (filasAfectadas > 0) {
-                JOptionPane.showMessageDialog(this, "Cuenta eliminada correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                cargarCuentas();
+                JOptionPane.showMessageDialog(this, "Categoría eliminada correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                cargarCategorias();
             } else {
-                JOptionPane.showMessageDialog(this, "No se pudo eliminar la cuenta.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "No se pudo eliminar la categoría.", "Error", JOptionPane.ERROR_MESSAGE);
 
             }
         } catch (SQLException e) {
-            System.out.println("Error al eliminar cuenta: " + e.getMessage());
-            JOptionPane.showMessageDialog(this, "Error al eliminar la cuenta.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error al eliminar categoría: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error al eliminar la categoría.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -666,5 +594,4 @@ public class Cuentas extends javax.swing.JFrame implements MouseListener, MouseM
     public void mouseReleased(MouseEvent e) {
         //  
     }
-
 }

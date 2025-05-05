@@ -205,7 +205,7 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Agregar categor&#xed;a"/>
             <Property name="borderColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="55" green="24" red="37" type="rgb"/>
+              <Color blue="f7" green="e8" red="e2" type="rgb"/>
             </Property>
             <Property name="color" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f7" green="e8" red="e2" type="rgb"/>
